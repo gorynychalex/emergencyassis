@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/task")
+@RequestMapping("/api/v2/task")
 public class SocialServiceTaskController {
 
     List<Map<String,String>> tasks = new ArrayList<Map<String, String>>(){{
