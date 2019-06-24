@@ -23,5 +23,4 @@ public class SocialServiceTaskController {
     public List<Map<String, String>> taskList() {
         return tasks;
     }
-
 }
