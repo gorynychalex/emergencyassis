@@ -1,8 +1,12 @@
 package ru.popovich.emergencyassist.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.popovich.emergencyassist.dbtest.SocialServiceGenerator;
 import ru.popovich.emergencyassist.dbtest.TaskGenerator;
+import ru.popovich.emergencyassist.dbtest.UserGenerator;
+import ru.popovich.emergencyassist.dto.TaskSocialServiceIds;
 import ru.popovich.emergencyassist.model.TaskSocialService;
+import ru.popovich.emergencyassist.model.User;
 
 import java.util.List;
 
@@ -30,5 +34,21 @@ public class TaskController {
     public TaskSocialService addTask(@RequestBody TaskSocialService task){
         taskSocialServices.add(task);
         return task;
+    }
+
+    @PostMapping("/new")
+    public TaskSocialService addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
+
+        String sid = taskSocialServiceIds.getSid(); String uid = taskSocialServiceIds.getUid();
+
+        TaskSocialService taskSocialService = new TaskSocialService(
+                String.valueOf(TaskGenerator.getInstance().getTaskSocialServices().size()+10),
+                SocialServiceGenerator.getInstance().getSocialServices().stream().filter(s->s.getId().equals(sid)).findFirst().get(),
+                UserGenerator.getInstance().getUsers().stream().filter(t->t.getId().equals(uid)).findFirst().get()
+                );
+
+        taskSocialServices.add(taskSocialService);
+
+        return taskSocialService;
     }
 }
