@@ -1,11 +1,15 @@
 package ru.popovich.emergencyassist.model;
 
+import javax.persistence.*;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class SocialService {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     private String title;
@@ -24,6 +28,7 @@ public class SocialService {
 
     private Date dateCreation;
 
+    @ElementCollection(targetClass = Date.class)
     private List<Date> dateEnable;
 
     public SocialService() {}

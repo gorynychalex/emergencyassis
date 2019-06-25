@@ -5,26 +5,37 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.popovich.emergencyassist.model.personal.UserPersonal;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity(name = "usr")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+
     private String nickname;
+
     private String password;
+
     private boolean enable = true;
+
     private Date dateCreation;
 
-    private UserPersonal personal;
+//    @OneToOne
+//    private UserPersonal personal;
 
     private UserRole role;
+
+    @ManyToOne
     private Organization organization;
 
     private String descriptions;
     private String notes;
 
-    private List<UserRelation> userRelations;
+//    private List<UserRelation> userRelations;
 
     public User() {
     }
@@ -42,11 +53,6 @@ public class User {
     public User(String id, String nickname, String password, UserRole userRole) {
         this(id, nickname,password);
         this.role = userRole;
-    }
-
-    public User(String id, String nickname, String password, UserRole userRole, List<UserRelation> userRelations) {
-        this(id, nickname,password,userRole);
-        this.userRelations = userRelations;
     }
 
     public String getId() {
@@ -89,28 +95,12 @@ public class User {
         this.dateCreation = dateCreation;
     }
 
-    public UserPersonal getPersonal() {
-        return personal;
-    }
-
-    public void setPersonal(UserPersonal personal) {
-        this.personal = personal;
-    }
-
     public UserRole getRole() {
         return role;
     }
 
     public void setRole(UserRole role) {
         this.role = role;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
     }
 
     public String getDescriptions() {
@@ -129,11 +119,11 @@ public class User {
         this.notes = notes;
     }
 
-    public List<UserRelation> getUserRelations() {
-        return userRelations;
-    }
-
-    public void setUserRelations(List<UserRelation> userRelations) {
-        this.userRelations = userRelations;
-    }
+//    public List<UserRelation> getUserRelations() {
+//        return userRelations;
+//    }
+//
+//    public void setUserRelations(List<UserRelation> userRelations) {
+//        this.userRelations = userRelations;
+//    }
 }

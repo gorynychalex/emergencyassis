@@ -32,17 +32,17 @@ public class UserGenerator {
         List<UserRelation> userHardUp00Relations = new ArrayList<UserRelation>() {{
             add(new UserRelation(users.get(3),true)); add(new UserRelation(users.get(4),false)); add(new UserRelation(users.get(5),false));
         }};
-        users.get(0).setUserRelations(userHardUp00Relations);
+//        users.get(0).setUserRelations(userHardUp00Relations);
 
         List<UserRelation> userEmployee03Relations = new ArrayList<UserRelation>(){{
             add(new UserRelation(users.get(0),true)); add(new UserRelation(users.get(1),true));
         }};
-        users.get(3).setUserRelations(userEmployee03Relations);
+//        users.get(3).setUserRelations(userEmployee03Relations);
 
         List<UserRelation> userEmployee04Relations = new ArrayList<UserRelation>(){{
             add(new UserRelation(users.get(2),true)); add(new UserRelation(users.get(1),false));
         }};
-        users.get(4).setUserRelations(userEmployee04Relations);
+//        users.get(4).setUserRelations(userEmployee04Relations);
     }
 
     public static UserGenerator getInstance() { return instance; }

@@ -2,6 +2,7 @@ package ru.popovich.emergencyassist.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import javax.persistence.Entity;
 import java.util.List;
 
 public class UserRelation {
