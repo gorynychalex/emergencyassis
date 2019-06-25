@@ -17,13 +17,13 @@ public class UserGenerator {
 
         users = new ArrayList<User>() {
             {
-                add(new User("0","pupkin", "12345678", UserRole.HARDUP));
-                add(new User("1","ivanov", "12345678", UserRole.HARDUP));
-                add(new User("2","sidorov", "12345678", UserRole.HARDUP));
+                add(new User("pupkin", "12345678", UserRole.HARDUP));
+                add(new User("ivanov", "12345678", UserRole.HARDUP));
+                add(new User("sidorov", "12345678", UserRole.HARDUP));
 
-                add(new User("3","peskov", "12345678", UserRole.EMPLOYEE));
-                add(new User("4","buzova", "12345678", UserRole.EMPLOYEE));
-                add(new User("5","putin", "12345678", UserRole.EMPLOYEE));
+                add(new User("peskov", "12345678", UserRole.EMPLOYEE));
+                add(new User("buzova", "12345678", UserRole.EMPLOYEE));
+                add(new User("putin", "12345678", UserRole.EMPLOYEE));
             }
         };
 

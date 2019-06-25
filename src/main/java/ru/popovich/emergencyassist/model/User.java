@@ -13,9 +13,6 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
-
     private String nickname;
 
     private String password;
@@ -23,6 +20,9 @@ public class User {
     private boolean enable = true;
 
     private Date dateCreation;
+
+    @ElementCollection(targetClass = Date.class)
+    private List<Date> dateEnable;
 
 //    @OneToOne
 //    private UserPersonal personal;
@@ -45,22 +45,9 @@ public class User {
         this.password = password;
     }
 
-    public User(String id, String nickname, String password) {
+    public User(String nickname, String password, UserRole userRole) {
         this(nickname,password);
-        this.id = id;
-    }
-
-    public User(String id, String nickname, String password, UserRole userRole) {
-        this(id, nickname,password);
         this.role = userRole;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNickname() {
@@ -126,4 +113,21 @@ public class User {
 //    public void setUserRelations(List<UserRelation> userRelations) {
 //        this.userRelations = userRelations;
 //    }
+
+
+    public List<Date> getDateEnable() {
+        return dateEnable;
+    }
+
+    public void setDateEnable(List<Date> dateEnable) {
+        this.dateEnable = dateEnable;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
 }

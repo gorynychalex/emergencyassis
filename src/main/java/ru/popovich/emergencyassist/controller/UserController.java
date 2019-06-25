@@ -20,11 +20,11 @@ public class UserController {
 
 
     @GetMapping("{id}")
-    public User getUserById(@PathVariable String id) { return getUserByIdPriv(id); }
+    public User getUserByName(@PathVariable String id) { return getUserByIdPriv(id); }
 
-    private User getUserByIdPriv(String id){
+    private User getUserByIdPriv(String nickname){
         return users.stream()
-                .filter(t->t.getId().equals(id))
+                .filter(t->t.getNickname().equals(nickname))
                 .findFirst().get();
     }
 

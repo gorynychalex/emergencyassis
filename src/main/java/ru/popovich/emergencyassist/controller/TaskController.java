@@ -44,7 +44,7 @@ public class TaskController {
         TaskSocialService taskSocialService = new TaskSocialService(
                 String.valueOf(TaskGenerator.getInstance().getTaskSocialServices().size()+10),
                 SocialServiceGenerator.getInstance().getSocialServices().stream().filter(s->s.getId().equals(sid)).findFirst().get(),
-                UserGenerator.getInstance().getUsers().stream().filter(t->t.getId().equals(uid)).findFirst().get()
+                UserGenerator.getInstance().getUsers().stream().filter(t->t.getNickname().equals(uid)).findFirst().get()
                 );
 
         taskSocialServices.add(taskSocialService);
