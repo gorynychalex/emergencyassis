@@ -33,8 +33,7 @@ public class SocialService {
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateCreation;
 
-//    @ElementCollection(targetClass = Date.class)
-//    private List<Date> dateEnable;
+    private LocalDateTime dateEnable;
 
     public SocialService() {}
 
@@ -124,5 +123,13 @@ public class SocialService {
 
     public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public LocalDateTime getDateEnable() {
+        return dateEnable;
+    }
+
+    public void setDateEnable(LocalDateTime dateEnable) {
+        this.dateEnable = dateEnable;
     }
 }
