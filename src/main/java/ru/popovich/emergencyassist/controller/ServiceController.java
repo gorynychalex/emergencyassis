@@ -1,36 +1,44 @@
 package ru.popovich.emergencyassist.controller;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.popovich.emergencyassist.dbtest.SocialServiceGenerator;
 import ru.popovich.emergencyassist.model.SocialService;
-import ru.popovich.emergencyassist.model.TaskSocialService;
+import ru.popovich.emergencyassist.repository.SocialServiceDao;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/service")
 public class ServiceController {
 
-    List<SocialService> socialServices = SocialServiceGenerator.getInstance().getSocialServices();
+    @Autowired
+    private SocialServiceDao socialServiceDao;
 
-    @GetMapping
-    public List<SocialService> listSocialService() { return socialServices; }
-
+    @GetMapping({"","/list"})
+    public List<SocialService> listSocialServiceFromDao() { return socialServiceDao.findAll(); }
 
     @GetMapping("{id}")
-    public SocialService getServiceById(@PathVariable String id) { return getServiceByIdPriv(id); }
-
-    private SocialService getServiceByIdPriv(String id){
-        return socialServices.stream()
-                .filter(t->t.getId().equals(id))
-                .findFirst().get();
-    }
+    public SocialService getServiceById(@PathVariable("id") SocialService socialService) { return socialService; }
 
     @PostMapping
-    public SocialService addTask(@RequestBody SocialService service){
-        socialServices.add(service);
+    public SocialService addTaskDao(@RequestBody SocialService service){
+        socialServiceDao.save(service);
         return service;
     }
+
+    @PutMapping("{id}")
+    public SocialService update(@PathVariable("id") SocialService socialServiceFromDb,
+                                @RequestBody SocialService socialService)
+    {
+        BeanUtils.copyProperties(socialService, socialServiceFromDb, "id");
+
+        return socialServiceDao.save(socialService);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") SocialService socialService){
+        socialServiceDao.delete(socialService);
+    }
+
 }

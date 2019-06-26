@@ -1,5 +1,6 @@
 package ru.popovich.emergencyassist.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.popovich.emergencyassist.dbtest.SocialServiceGenerator;
 import ru.popovich.emergencyassist.dbtest.TaskGenerator;
@@ -7,6 +8,7 @@ import ru.popovich.emergencyassist.dbtest.UserGenerator;
 import ru.popovich.emergencyassist.dto.TaskSocialServiceIds;
 import ru.popovich.emergencyassist.model.TaskSocialService;
 import ru.popovich.emergencyassist.model.User;
+import ru.popovich.emergencyassist.repository.SocialServiceDao;
 
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class TaskController {
     @PostMapping("/new")
     public TaskSocialService addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
 
-        String sid = taskSocialServiceIds.getSid(); String uid = taskSocialServiceIds.getUid();
+        Long sid = taskSocialServiceIds.getSid(); String uid = taskSocialServiceIds.getUid();
 
         TaskSocialService taskSocialService = new TaskSocialService(
                 String.valueOf(TaskGenerator.getInstance().getTaskSocialServices().size()+10),

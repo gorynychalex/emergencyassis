@@ -5,12 +5,13 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
+
 @Entity
 public class SocialService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     private String title;
 
@@ -18,7 +19,7 @@ public class SocialService {
 
     private float cost;
 
-    private Duration duration; //SLA duration, plan
+//    private Duration duration; //SLA duration, plan
 
     private boolean oneTime;
 
@@ -26,28 +27,35 @@ public class SocialService {
 
     private boolean enable = true;
 
-    private Date dateCreation;
+//    @ElementCollection(targetClass = String.class)
+//    private Date dateCreation;
 
-    @ElementCollection(targetClass = Date.class)
-    private List<Date> dateEnable;
+//    @ElementCollection(targetClass = Date.class)
+//    private List<Date> dateEnable;
 
     public SocialService() {}
 
     public SocialService(String title, float cost) {
         this.title = title;
         this.cost = cost;
+//        this.dateCreation = new Date();
     }
 
-    public SocialService(String id, String title, float cost){
+    public SocialService(String title, float cost, int periods){
+        this(title, cost);
+        this.periods = periods;
+    }
+
+    public SocialService(Long id, String title, float cost){
         this(title, cost);
         this.id = id;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,13 +83,13 @@ public class SocialService {
         this.cost = cost;
     }
 
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Duration duration) {
-        this.duration = duration;
-    }
+//    public Duration getDuration() {
+//        return duration;
+//    }
+//
+//    public void setDuration(Duration duration) {
+//        this.duration = duration;
+//    }
 
     public boolean isOneTime() {
         return oneTime;
@@ -107,19 +115,19 @@ public class SocialService {
         this.enable = enable;
     }
 
-    public Date getDateCreation() {
-        return dateCreation;
-    }
+//    public Date getDateCreation() {
+//        return dateCreation;
+//    }
+//
+//    public void setDateCreation(Date dateCreation) {
+//        this.dateCreation = dateCreation;
+//    }
 
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
-    }
-
-    public List<Date> getDateEnable() {
-        return dateEnable;
-    }
-
-    public void setDateEnable(List<Date> dateEnable) {
-        this.dateEnable = dateEnable;
-    }
+//    public List<Date> getDateEnable() {
+//        return dateEnable;
+//    }
+//
+//    public void setDateEnable(List<Date> dateEnable) {
+//        this.dateEnable = dateEnable;
+//    }
 }
