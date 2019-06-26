@@ -41,4 +41,8 @@ public class ServiceController {
         socialServiceDao.delete(socialService);
     }
 
+    @GetMapping("/add")
+    public void add(){
+        socialServiceDao.save(new SocialService("Еще услуга", 145.98F));
+    }
 }

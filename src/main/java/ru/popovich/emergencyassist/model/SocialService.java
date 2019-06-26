@@ -1,7 +1,10 @@
 package ru.popovich.emergencyassist.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class SocialService {
 
     private float cost;
 
-//    private Duration duration; //SLA duration, plan
+    private Duration duration; //SLA duration, plan
 
     private boolean oneTime;
 
@@ -27,8 +30,8 @@ public class SocialService {
 
     private boolean enable = true;
 
-//    @ElementCollection(targetClass = String.class)
-//    private Date dateCreation;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateCreation;
 
 //    @ElementCollection(targetClass = Date.class)
 //    private List<Date> dateEnable;
@@ -38,7 +41,7 @@ public class SocialService {
     public SocialService(String title, float cost) {
         this.title = title;
         this.cost = cost;
-//        this.dateCreation = new Date();
+        this.dateCreation = LocalDateTime.now();
     }
 
     public SocialService(String title, float cost, int periods){
@@ -83,13 +86,13 @@ public class SocialService {
         this.cost = cost;
     }
 
-//    public Duration getDuration() {
-//        return duration;
-//    }
-//
-//    public void setDuration(Duration duration) {
-//        this.duration = duration;
-//    }
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
 
     public boolean isOneTime() {
         return oneTime;
@@ -115,19 +118,11 @@ public class SocialService {
         this.enable = enable;
     }
 
-//    public Date getDateCreation() {
-//        return dateCreation;
-//    }
-//
-//    public void setDateCreation(Date dateCreation) {
-//        this.dateCreation = dateCreation;
-//    }
+    public LocalDateTime getDateCreation() {
+        return dateCreation;
+    }
 
-//    public List<Date> getDateEnable() {
-//        return dateEnable;
-//    }
-//
-//    public void setDateEnable(List<Date> dateEnable) {
-//        this.dateEnable = dateEnable;
-//    }
+    public void setDateCreation(LocalDateTime dateCreation) {
+        this.dateCreation = dateCreation;
+    }
 }
