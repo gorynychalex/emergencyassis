@@ -15,4 +15,5 @@ public class SocialServiceService {
         socialServiceDao.save(socialService);
     }
 
+
 }

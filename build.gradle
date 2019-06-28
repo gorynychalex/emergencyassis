@@ -15,10 +15,6 @@ configurations {
 		extendsFrom developmentOnly
 	}
 
-    war {
-        archiveName = project.property('warName')
-    }
-
 }
 
 repositories {

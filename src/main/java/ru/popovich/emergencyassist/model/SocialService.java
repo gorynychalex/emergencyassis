@@ -1,6 +1,9 @@
 package ru.popovich.emergencyassist.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -10,17 +13,24 @@ import java.util.List;
 
 
 @Entity
+@JsonPropertyOrder({"title","cityprice","countryprice","description", "duration", "oneTime", "periods", "enable"})
 public class SocialService {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 1024)
     private String title;
 
     private String description;
 
     private float cost;
+
+    private float cityprice;
+
+    private float countryprice;
 
     private Duration duration; //SLA duration, plan
 
@@ -30,9 +40,16 @@ public class SocialService {
 
     private boolean enable = true;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn
+    private SocialServiceCatalog socialServiceCatalog;
+
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     private LocalDateTime dateCreation;
 
+    @JsonIgnore
     private LocalDateTime dateEnable;
 
     public SocialService() {}
@@ -40,6 +57,13 @@ public class SocialService {
     public SocialService(String title, float cost) {
         this.title = title;
         this.cost = cost;
+        this.dateCreation = LocalDateTime.now();
+    }
+
+    public SocialService(String title, float cityprice, float countryprice) {
+        this.title = title;
+        this.cityprice = cityprice;
+        this.countryprice = countryprice;
         this.dateCreation = LocalDateTime.now();
     }
 
@@ -51,6 +75,11 @@ public class SocialService {
     public SocialService(Long id, String title, float cost){
         this(title, cost);
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return this.title + " " + this.countryprice + " " + this.cityprice;
     }
 
     public Long getId() {
@@ -131,5 +160,29 @@ public class SocialService {
 
     public void setDateEnable(LocalDateTime dateEnable) {
         this.dateEnable = dateEnable;
+    }
+
+    public float getCityprice() {
+        return cityprice;
+    }
+
+    public void setCityprice(float cityprice) {
+        this.cityprice = cityprice;
+    }
+
+    public float getCountryprice() {
+        return countryprice;
+    }
+
+    public void setCountryprice(float countryprice) {
+        this.countryprice = countryprice;
+    }
+
+    public SocialServiceCatalog getSocialServiceCatalog() {
+        return socialServiceCatalog;
+    }
+
+    public void setSocialServiceCatalog(SocialServiceCatalog socialServiceCatalog) {
+        this.socialServiceCatalog = socialServiceCatalog;
     }
 }
