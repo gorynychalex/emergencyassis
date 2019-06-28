@@ -7,7 +7,6 @@ import ru.popovich.emergencyassist.model.SocialService;
 import ru.popovich.emergencyassist.model.SocialServiceCatalog;
 import ru.popovich.emergencyassist.repository.SocialServiceCatalogDao;
 import ru.popovich.emergencyassist.repository.SocialServiceDao;
-import ru.popovich.emergencyassist.service.SocialServiceService;
 
 import java.util.List;
 

@@ -1,6 +1,21 @@
 package ru.popovich.emergencyassist.service;
 
+//https://hellokoding.com/jpa-one-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
+//https://stackoverflow.com/questions/36446201/org-postgresql-util-psqlexception-error-value-too-long-for-type-character-vary
+
+//JSON MAPPER
+
 //https://stackoverflow.com/questions/34277392/best-way-to-load-some-json-files-into-a-spring-boot-application
+//https://www.journaldev.com/2324/jackson-json-java-parser-api-example-tutorial
+//https://www.baeldung.com/jackson-mapping-dynamic-object
+//https://stackoverflow.com/questions/25738569/jpa-map-json-column-to-java-object
+
+//https://stackoverflow.com/questions/6349421/how-to-use-jackson-to-deserialise-an-array-of-objects
+//https://stackoverflow.com/questions/23101260/ignore-fields-from-java-object-dynamically-while-sending-as-json-from-spring-mvc
+
+//https://www.baeldung.com/jackson-ignore-properties-on-serialization
+//https://stackoverflow.com/questions/23012841/receiving-json-and-deserializing-as-list-of-object-at-spring-mvc-controller
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -35,9 +50,6 @@ public class SocialServiceServiceInit {
     @Autowired
     ResourceLoader resourceLoader;
 
-    @Value("${json.file1}")
-    String jsonfile1;
-
     @Value("${json.file}")
     String jsonfile;
 
@@ -58,34 +70,20 @@ public class SocialServiceServiceInit {
 
         ObjectMapper jsonMapper = new ObjectMapper();
 
-        logger.info(jsonfile1.toString());
-
-//        testUser = jsonMapper.readValue(resourceLoader.getResource(jsonfile).getFile(),TestUser.class);
-
-        socialServiceCatalog = jsonMapper.readValue(
-                resourceLoader.getResource(jsonfile1).getFile(),
-                SocialServiceCatalog.class);
-
         socialServiceCatalogList =
                 jsonMapper.readValue(
                         resourceLoader.getResource(
                                 jsonfile).getFile(),
                         jsonMapper.getTypeFactory().constructCollectionType(List.class, SocialServiceCatalog.class));
 
-        logger.info(socialServiceCatalog.getTitle());
-        logger.info(socialServiceCatalog.getSocialService().get(0).getTitle());
-//        logger.info("Id: " + socialServiceCatalog.getId().toString());
 
         socialServiceCatalogList.forEach(
                 s-> {
                     socialServiceCatalogDao.save(s);
-//                    logger.info(s.getTitle());
-//                    logger.info(s.toString());
 
                     s.getSocialService().forEach(
                             x->
                             {
-//                                logger.info(x.toString());
                                 x.setSocialServiceCatalog(s);
                                 socialServiceDao.save(x);
                             });
@@ -94,12 +92,5 @@ public class SocialServiceServiceInit {
                 }
                 );
 
-//        socialServiceCatalog.getSocialService().forEach(socialServiceDao::save);
-//        socialServiceCatalogDao.save(socialServiceCatalog);
-
-
-
-//        socialServiceCatalogDao.save(socialServiceCatalog);
-//        assert(socialServiceCatalog.getTitle().equals("Социально-бытовые услуги"));
     }
 }
