@@ -1,9 +1,13 @@
 package ru.popovich.emergencyassist.model.personal;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Document {
 
+    @Id
     private String id;
 
     private String title;

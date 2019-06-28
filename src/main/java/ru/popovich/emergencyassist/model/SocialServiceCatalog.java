@@ -1,25 +1,19 @@
 package ru.popovich.emergencyassist.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.ToString;
-import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Entity
-@JsonPropertyOrder({"title","socialService"})
+@JsonPropertyOrder({"id","title","socialService"})
 @ToString
 public class SocialServiceCatalog {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -41,7 +35,7 @@ public class SocialServiceCatalog {
 
     private boolean enable = true;
 
-    private Date dateCreation;
+    private LocalDateTime dateCreation;
 
     private LocalDateTime dateEnable;
 
@@ -113,11 +107,11 @@ public class SocialServiceCatalog {
         this.enable = enable;
     }
 
-    public Date getDateCreation() {
+    public LocalDateTime getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
     }
 

@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.popovich.emergencyassist.model.SocialService;
 
 public interface SocialServiceDao extends JpaRepository<SocialService, Long> {
-
     SocialService findByTitle(String title);
 }

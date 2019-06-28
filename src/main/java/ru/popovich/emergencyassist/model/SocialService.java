@@ -1,22 +1,18 @@
 package ru.popovich.emergencyassist.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 
 @Entity
 @JsonPropertyOrder({"title","cityprice","countryprice","description", "duration", "oneTime", "periods", "enable"})
 public class SocialService {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

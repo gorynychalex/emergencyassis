@@ -11,7 +11,7 @@ import ru.popovich.emergencyassist.repository.SocialServiceDao;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/service")
+@RequestMapping("/api/v1")
 public class ServiceController {
 
     @Autowired
@@ -20,19 +20,19 @@ public class ServiceController {
     @Autowired
     private SocialServiceCatalogDao socialServiceCatalogDao;
 
-    @GetMapping({"","/list"})
+    @GetMapping({"/service","/service/list"})
     public List<SocialService> listSocialServiceFromDao() { return socialServiceDao.findAll(); }
 
-    @GetMapping("{id}")
+    @GetMapping("/service/{id}")
     public SocialService getServiceById(@PathVariable("id") SocialService socialService) { return socialService; }
 
-    @PostMapping
+    @PostMapping("/service")
     public SocialService addTaskDao(@RequestBody SocialService service){
         socialServiceDao.save(service);
         return service;
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/service/{id}")
     public SocialService update(@PathVariable("id") SocialService socialServiceFromDb,
                                 @RequestBody SocialService socialService)
     {
@@ -41,7 +41,7 @@ public class ServiceController {
         return socialServiceDao.save(socialService);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/service/{id}")
     public void delete(@PathVariable("id") SocialService socialService){
         socialServiceDao.delete(socialService);
     }
@@ -61,5 +61,12 @@ public class ServiceController {
     @GetMapping("/catalog/{id}")
     public SocialServiceCatalog catalog(@PathVariable("id") SocialServiceCatalog socialServiceCatalog){
         return socialServiceCatalog;
+    }
+
+    @GetMapping({"/catalog/{cid}/service/{id}"})
+    public SocialService getServiceFromCatalogById(
+            @PathVariable("id") SocialService socialService){
+
+        return socialService;
     }
 }

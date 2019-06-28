@@ -1,13 +1,21 @@
 package ru.popovich.emergencyassist.dbtest;
 
+import org.apache.juli.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.model.UserRelation;
 import ru.popovich.emergencyassist.model.UserRole;
+import ru.popovich.emergencyassist.repository.UserDao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserGenerator {
+
+    Logger logger = LoggerFactory.getLogger(UserGenerator.class);
 
     private static UserGenerator instance = new UserGenerator();
 
@@ -26,6 +34,13 @@ public class UserGenerator {
                 add(new User("putin", "12345678", UserRole.EMPLOYEE));
             }
         };
+
+        users.forEach(x-> {
+                    logger.info(x.toString());
+//                    userDao.save(new User(x.getNickname(),x.getPassword(),x.getRole()));
+//                    userDao.save(x);
+                }
+        );
 
         //Add relations between Needy Users and Employee
 

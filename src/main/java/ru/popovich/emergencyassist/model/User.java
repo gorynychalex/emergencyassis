@@ -24,8 +24,8 @@ public class User {
     @ElementCollection(targetClass = Date.class)
     private List<Date> dateEnable;
 
-//    @OneToOne
-//    private UserPersonal personal;
+    @OneToOne
+    private UserPersonal personal;
 
     private UserRole role;
 
@@ -48,6 +48,11 @@ public class User {
     public User(String nickname, String password, UserRole userRole) {
         this(nickname,password);
         this.role = userRole;
+    }
+
+    @Override
+    public String toString() {
+        return this.nickname + " " + this.enable;
     }
 
     public String getNickname() {
