@@ -36,7 +36,7 @@ public class UserGenerator {
         };
 
         users.forEach(x-> {
-                    logger.info(x.toString());
+//                    logger.info(x.toString());
 //                    userDao.save(new User(x.getNickname(),x.getPassword(),x.getRole()));
 //                    userDao.save(x);
                 }
