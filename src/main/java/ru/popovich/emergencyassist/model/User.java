@@ -8,6 +8,7 @@ import ru.popovich.emergencyassist.model.personal.UserPersonal;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Entity(name = "usr")
 public class User {
@@ -19,7 +20,13 @@ public class User {
 
     private boolean enable = true;
 
+    private String email;
+
+    private Locale locale;
+
     private Date dateCreation;
+
+    private String sub;
 
     @ElementCollection(targetClass = Date.class)
     private List<Date> dateEnable;
@@ -134,5 +141,37 @@ public class User {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public UserPersonal getPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(UserPersonal personal) {
+        this.personal = personal;
+    }
+
+    public String getSub() {
+        return sub;
+    }
+
+    public void setSub(String sub) {
+        this.sub = sub;
     }
 }
