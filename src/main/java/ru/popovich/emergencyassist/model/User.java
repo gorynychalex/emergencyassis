@@ -1,12 +1,10 @@
 package ru.popovich.emergencyassist.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.popovich.emergencyassist.model.personal.UserPersonal;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,25 +22,38 @@ public class User {
 
     private Locale locale;
 
-    private Date dateCreation;
+    private LocalDateTime dateCreation;
 
     private String sub;
 
-    @ElementCollection(targetClass = Date.class)
-    private List<Date> dateEnable;
+    @ElementCollection(targetClass = LocalDateTime.class)
+    private List<LocalDateTime> dateEnable;
 
     @OneToOne
     private UserPersonal personal;
 
     private UserRole role;
 
+    @ElementCollection(targetClass = UserRole.class,fetch = FetchType.EAGER)
+    private List<UserRole> roles;
+
     @ManyToOne
     private Organization organization;
+
+    @ManyToMany
+    @ElementCollection(targetClass = Organization.class)
+    private List<Organization> organizations;
+
+    @ElementCollection(targetClass = LocalDateTime.class)
+    private List<LocalDateTime> authDateTime;
 
     private String descriptions;
     private String notes;
 
 //    private List<UserRelation> userRelations;
+
+    @ElementCollection(targetClass = User.class)
+    private List<User> users;
 
     public User() {
     }
@@ -86,11 +97,11 @@ public class User {
         this.enable = enable;
     }
 
-    public Date getDateCreation() {
+    public LocalDateTime getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -125,15 +136,6 @@ public class User {
 //    public void setUserRelations(List<UserRelation> userRelations) {
 //        this.userRelations = userRelations;
 //    }
-
-
-    public List<Date> getDateEnable() {
-        return dateEnable;
-    }
-
-    public void setDateEnable(List<Date> dateEnable) {
-        this.dateEnable = dateEnable;
-    }
 
     public Organization getOrganization() {
         return organization;
@@ -173,5 +175,45 @@ public class User {
 
     public void setSub(String sub) {
         this.sub = sub;
+    }
+
+    public void setDateEnable(List<LocalDateTime> dateEnable) {
+        this.dateEnable = dateEnable;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
+    }
+
+    public List<LocalDateTime> getDateEnable() {
+        return dateEnable;
+    }
+
+    public List<Organization> getOrganizations() {
+        return organizations;
+    }
+
+    public void setOrganizations(List<Organization> organizations) {
+        this.organizations = organizations;
+    }
+
+    public List<LocalDateTime> getAuthDateTime() {
+        return authDateTime;
+    }
+
+    public void setAuthDateTime(List<LocalDateTime> authDateTime) {
+        this.authDateTime = authDateTime;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

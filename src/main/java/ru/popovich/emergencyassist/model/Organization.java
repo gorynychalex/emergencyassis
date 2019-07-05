@@ -33,6 +33,10 @@ public class Organization {
     @ElementCollection(targetClass = String.class)
     private List<String> openHours;
 
+    @ManyToMany
+    @ElementCollection(targetClass = User.class)
+    private List<User> users;
+
     private String description;
 
     private String notes;

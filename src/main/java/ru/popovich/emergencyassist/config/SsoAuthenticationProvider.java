@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.repository.UserDao;
 
-@Component
+//@Component
 public class SsoAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
@@ -28,7 +28,7 @@ public class SsoAuthenticationProvider implements AuthenticationProvider {
         return false;
     }
 
-    @Bean
+//    @Bean
     public PrincipalExtractor principalExtractor(UserDao userDao){
         return map -> {
             String name = (String) map.get("name");

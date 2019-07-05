@@ -9,6 +9,8 @@ import ru.popovich.emergencyassist.dto.TaskSocialServiceIds;
 import ru.popovich.emergencyassist.model.TaskSocialService;
 import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.repository.SocialServiceDao;
+import ru.popovich.emergencyassist.repository.TaskSocialServiceDao;
+import ru.popovich.emergencyassist.repository.UserDao;
 
 import java.util.List;
 
@@ -17,6 +19,15 @@ import java.util.List;
 public class TaskController {
 
     List<TaskSocialService> taskSocialServices = TaskGenerator.getInstance().getTaskSocialServices();
+
+    @Autowired
+    private TaskSocialServiceDao taskSocialServiceDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private SocialServiceDao socialServiceDao;
 
     @GetMapping
     public List<TaskSocialService> taskSocialServices() {
