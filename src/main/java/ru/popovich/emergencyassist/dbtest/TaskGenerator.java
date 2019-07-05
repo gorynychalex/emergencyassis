@@ -23,10 +23,10 @@ public class TaskGenerator {
         this.users = UserGenerator.getInstance().getUsers();
 
         this.taskSocialServices = new ArrayList<TaskSocialService>() {{
-            add(new TaskSocialService("1",socialServices.get(0),users.get(0),users.get(3)));
-            add(new TaskSocialService("2",socialServices.get(2),users.get(0),users.get(3)));
-            add(new TaskSocialService("4",socialServices.get(0),users.get(1),users.get(4)));
-            add(new TaskSocialService("5",socialServices.get(3),users.get(1),users.get(4)));
+            add(new TaskSocialService(socialServices.get(0),users.get(0),users.get(3)));
+            add(new TaskSocialService(socialServices.get(2),users.get(0),users.get(3)));
+            add(new TaskSocialService(socialServices.get(0),users.get(1),users.get(4)));
+            add(new TaskSocialService(socialServices.get(3),users.get(1),users.get(4)));
         }};
     }
 

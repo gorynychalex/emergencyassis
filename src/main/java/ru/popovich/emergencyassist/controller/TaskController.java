@@ -1,11 +1,13 @@
 package ru.popovich.emergencyassist.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.popovich.emergencyassist.dbtest.SocialServiceGenerator;
 import ru.popovich.emergencyassist.dbtest.TaskGenerator;
 import ru.popovich.emergencyassist.dbtest.UserGenerator;
 import ru.popovich.emergencyassist.dto.TaskSocialServiceIds;
+import ru.popovich.emergencyassist.model.SocialService;
 import ru.popovich.emergencyassist.model.TaskSocialService;
 import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.repository.SocialServiceDao;
@@ -31,11 +33,11 @@ public class TaskController {
 
     @GetMapping
     public List<TaskSocialService> taskSocialServices() {
-        return taskSocialServices;
+        return taskSocialServiceDao.findAll();
     }
 
     @GetMapping("{id}")
-    public TaskSocialService getTaskById(@PathVariable String id) { return getTaskByIdPriv(id); }
+    public TaskSocialService getTaskById(@PathVariable("id") TaskSocialService taskSocialService) { return taskSocialService; }
 
     private TaskSocialService getTaskByIdPriv(String id){
         return taskSocialServices.stream()
@@ -52,15 +54,17 @@ public class TaskController {
     @PostMapping("/new")
     public TaskSocialService addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
 
-        Long sid = taskSocialServiceIds.getSid(); String uid = taskSocialServiceIds.getUid();
+        User user = userDao.findByNickname(taskSocialServiceIds.getUid());
+        SocialService socialService = socialServiceDao.findById(taskSocialServiceIds.getSid()).get();
 
         TaskSocialService taskSocialService = new TaskSocialService(
-                String.valueOf(TaskGenerator.getInstance().getTaskSocialServices().size()+10),
-                SocialServiceGenerator.getInstance().getSocialServices().stream().filter(s->s.getId().equals(sid)).findFirst().get(),
-                UserGenerator.getInstance().getUsers().stream().filter(t->t.getNickname().equals(uid)).findFirst().get()
-                );
+                socialService,
+                user,
+                userDao.findByNickname(SecurityContextHolder.getContext().getAuthentication().getName())
+        );
 
         taskSocialServices.add(taskSocialService);
+        taskSocialServiceDao.save(taskSocialService);
 
         return taskSocialService;
     }
