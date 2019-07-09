@@ -46,9 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
-                .and()
-                .formLogin()
-                .permitAll()
+//                .and()
+//                .formLogin()
+//                .permitAll()
 //                .and()
 //                .csrf().disable()
         ;
@@ -59,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth
                 .authenticationProvider(userDaoAuthenticationProvider());
+//        auth
+//                .userDetailsService(userService);
     }
 
     @Bean

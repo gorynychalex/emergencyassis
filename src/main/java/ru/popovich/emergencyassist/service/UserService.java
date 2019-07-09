@@ -45,7 +45,9 @@ public class UserService implements UserDetailsService {
 
         userBuilder = org.springframework.security.core.userdetails.User.withUsername(user.getNickname());
         userBuilder.disabled(!user.isEnable());
+
         userBuilder.password(passwordEncoder.encode(user.getPassword()));
+//        userBuilder.password(passwordEncoder.encode(user.getPassword()));
 
         userBuilder.authorities(user
                 .getRoles()

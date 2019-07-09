@@ -35,6 +35,8 @@ dependencies {
 
 	compile 'org.springframework.boot:spring-boot-starter-security'
 	compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.6.RELEASE'
+    compile 'org.springframework.security:spring-security-jwt'
+    compile 'org.springframework.security:spring-security-test'
 
 	compile 'org.springframework.security:spring-security-ldap'
 	

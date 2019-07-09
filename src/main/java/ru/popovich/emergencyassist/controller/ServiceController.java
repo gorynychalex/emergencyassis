@@ -2,6 +2,7 @@ package ru.popovich.emergencyassist.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.*;
 import ru.popovich.emergencyassist.model.SocialService;
 import ru.popovich.emergencyassist.model.SocialServiceCatalog;
