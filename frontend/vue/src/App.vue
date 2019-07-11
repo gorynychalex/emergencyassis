@@ -1,6 +1,15 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+
+    <b-container class="bv-example-row">
+      <b-jumbotron>
+      <b-row>
+        <b-col><img alt="Vue logo" src="./assets/logo_pcson_small.png"></b-col>
+        <b-col>Приморский центр социального обслуживания населения</b-col>
+      </b-row>
+      </b-jumbotron>
+    </b-container>
+
     <LoginForm msg="Введите логин-пароль"/>
   </div>
 </template>
