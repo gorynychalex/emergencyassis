@@ -35,3 +35,10 @@ $ mkdir frontend && cd frontend
 $ ~/.config/yarn/global/node_modules/@vue/cli/bin/vue.js create vue
 $ cd vue
 ````
+
+### Login form
+
+
+###  URL's
+* [“Best practices” авторизации для Vue](https://medium.com/@pavelgonzales/best-practices-авторизации-для-vue-8b769589001a)
+* [Authentication Best Practices for Vue](https://blog.sqreen.com/authentication-best-practices-vue/)
