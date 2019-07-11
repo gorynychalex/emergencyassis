@@ -63,9 +63,9 @@ fetch('http://localhost:8080/api/v1/task',{method:'POST',body:JSON.stringify(tas
   formdata.append('grant_type','password')
   formdata.append('username','popovich')
   formdata.append('password','12345678')
-  headers.append('Authorization', 'Basic ' + base64.encode("client:secret"))
-  
-  fetch('http://localhost:8080/oauth/token', { method: 'POST', headers: headers, body: formdata }).then(r=>r.json()).then(console.log)
+  headers.append('Authorization', 'Basic ' + btoa("client:secret"))
+  var rr;
+  fetch('http://localhost:8080/oauth/token', { method: 'POST', headers: headers, body: formdata }).then(r=>r.json()).then(r=>rr=r.access_token)
   ````
   
   - Get data with token:
@@ -78,7 +78,7 @@ fetch('http://localhost:8080/api/v1/task',{method:'POST',body:JSON.stringify(tas
   ````
   
   ````
-  fetch('/api/v1/service/',{ headers: {'Authorization': 'Bearer bd7cc339-8627-47df-be33-d31b96f16a80'}}).then(r=>r.json()).then(console.log)
+  fetch('/api/v1/service/',{ headers: {'Authorization': 'Bearer ' + rr}}).then(r=>r.json()).then(console.log)
   ````
   
   https://gist.github.com/ivermac/922def70ed9eaf83799b68ab1a587595

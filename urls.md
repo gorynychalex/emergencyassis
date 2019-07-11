@@ -42,3 +42,17 @@ https://stackoverflow.com/questions/23012841/receiving-json-and-deserializing-as
 * https://www.baeldung.com/spring-security-multiple-auth-providers
 * https://gist.github.com/phuonghuynh/6bbd04291958895ec2da
 * https://github.com/jdafda/springboot-ldap-oauth
+
+### Auth server
+* https://gist.github.com/ivermac/922def70ed9eaf83799b68ab1a587595
+* https://www.baeldung.com/rest-api-spring-oauth2-angular
+* https://howtodoinjava.com/spring5/security5/oauth2-auth-server/
+* https://www.digitalocean.com/community/tutorials/oauth-2-ru
+* https://habr.com/ru/company/mailru/blog/115163/
+* https://medium.com/@akourtim.ahmed/oauth-2-centralized-authorization-with-spring-boot-2-0-2-and-spring-security-5-and-jdbc-token-store-8dbc063bd5d4
+* https://habr.com/ru/company/otus/blog/453664/
+* https://www.baeldung.com/rest-api-spring-oauth2-angular
+* https://tools.ietf.org/html/rfc6749
+* https://habr.com/ru/company/mailru/blog/264049/
+* https://habr.com/ru/company/mailru/blog/417031/
+* https://habr.com/ru/company/mailru/blog/115163/

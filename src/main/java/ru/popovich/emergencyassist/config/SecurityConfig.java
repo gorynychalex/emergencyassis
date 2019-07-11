@@ -37,22 +37,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http
-                .authorizeRequests()
-                .antMatchers("/admin")
-                .hasRole("ADMIN")
-                .anyRequest()
-                .authenticated()
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/admin")
+//                .hasRole("ADMIN")
+//                .antMatchers("/api/**").permitAll()
+//                .anyRequest()
+//                .authenticated()
 //                .and()
 //                .formLogin()
 //                .permitAll()
 //                .and()
 //                .csrf().disable()
-        ;
-    }
+//        ;
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
