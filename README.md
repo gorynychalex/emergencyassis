@@ -1,5 +1,7 @@
 # Backend for Emergency Assistant
 
+[Emergency Assist Mobile Project](https://github.com/loakdv/EmergencyAssistantRefresh.git)
+
 Project for Help Hard Up People
 
 There are "Needy" and "HardUp" the same
@@ -40,3 +42,47 @@ fetch('http://localhost:8080/api/v1/task',{method:'POST',body:JSON.stringify(tas
   var taskbyid={"uid":2,"sid":3}
   fetch('http://localhost:8080/api/v1/task/new',{method:'POST',body:JSON.stringify(taskbyid),headers: new Headers({'Content-type': 'application/json'})})
   ````
+  
+### Security config
+
+##### Oauth2
+
+  - Get token
+  
+  ````
+  http -a client:secret --form POST http://localhost:8080/oauth/token grant_type='password' username='popovich' password='12345678'
+  ````
+  
+  
+  ````
+  curl client:secret@localhost:8080/oauth/token -d grant_type=password -d username=popovich -d password=12345678
+  ````
+  ````
+  let formdata = new FormData()
+  let headers=new Headers()
+  formdata.append('grant_type','password')
+  formdata.append('username','popovich')
+  formdata.append('password','12345678')
+  headers.append('Authorization', 'Basic ' + btoa("client:secret"))
+  var rr;
+  fetch('http://localhost:8080/oauth/token', { method: 'POST', headers: headers, body: formdata }).then(r=>r.json()).then(r=>rr=r.access_token)
+  ````
+  
+  - Get data with token:
+  ````
+  http http://localhost:8080/api/v1/service/ access_token=='bd7cc339-8627-47df-be33-d31b96f16a80'
+  ````
+  
+  ````
+  curl -H 'Authorization: Bearer bd7cc339-8627-47df-be33-d31b96f16a80' http://localhost:8080/api/v1/service
+  ````
+  
+  ````
+  fetch('/api/v1/service/',{ headers: {'Authorization': 'Bearer ' + rr}}).then(r=>r.json()).then(console.log)
+  ````
+  
+  https://gist.github.com/ivermac/922def70ed9eaf83799b68ab1a587595
+  
+  
+  
+  

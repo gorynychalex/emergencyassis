@@ -1,16 +1,23 @@
 package ru.popovich.emergencyassist.model;
 
+import javax.persistence.*;
 import java.time.Duration;
 import java.util.Date;
 
+@Entity
 public class TaskSocialService {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
+    @ManyToOne
     private SocialService socialService;
 
+    @ManyToOne
     private User needy;
 
+    @ManyToOne
     private User employee;
 
     private Date dateCreate;

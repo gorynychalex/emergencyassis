@@ -2,7 +2,7 @@ package ru.popovich.emergencyassist.dto;
 
 public class TaskSocialServiceIds {
     private String uid;
-    private String sid;
+    private Long sid;
 
     public String getUid() {
         return uid;
@@ -12,11 +12,11 @@ public class TaskSocialServiceIds {
         this.uid = uid;
     }
 
-    public String getSid() {
+    public Long getSid() {
         return sid;
     }
 
-    public void setSid(String sid) {
+    public void setSid(Long sid) {
         this.sid = sid;
     }
 }

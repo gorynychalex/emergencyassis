@@ -1,5 +1,6 @@
 package ru.popovich.emergencyassist.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.popovich.emergencyassist.dbtest.SocialServiceGenerator;
 import ru.popovich.emergencyassist.dbtest.TaskGenerator;
@@ -7,6 +8,9 @@ import ru.popovich.emergencyassist.dbtest.UserGenerator;
 import ru.popovich.emergencyassist.dto.TaskSocialServiceIds;
 import ru.popovich.emergencyassist.model.TaskSocialService;
 import ru.popovich.emergencyassist.model.User;
+import ru.popovich.emergencyassist.repository.SocialServiceDao;
+import ru.popovich.emergencyassist.repository.TaskSocialServiceDao;
+import ru.popovich.emergencyassist.repository.UserDao;
 
 import java.util.List;
 
@@ -15,6 +19,15 @@ import java.util.List;
 public class TaskController {
 
     List<TaskSocialService> taskSocialServices = TaskGenerator.getInstance().getTaskSocialServices();
+
+    @Autowired
+    private TaskSocialServiceDao taskSocialServiceDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private SocialServiceDao socialServiceDao;
 
     @GetMapping
     public List<TaskSocialService> taskSocialServices() {
@@ -39,12 +52,12 @@ public class TaskController {
     @PostMapping("/new")
     public TaskSocialService addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
 
-        String sid = taskSocialServiceIds.getSid(); String uid = taskSocialServiceIds.getUid();
+        Long sid = taskSocialServiceIds.getSid(); String uid = taskSocialServiceIds.getUid();
 
         TaskSocialService taskSocialService = new TaskSocialService(
                 String.valueOf(TaskGenerator.getInstance().getTaskSocialServices().size()+10),
                 SocialServiceGenerator.getInstance().getSocialServices().stream().filter(s->s.getId().equals(sid)).findFirst().get(),
-                UserGenerator.getInstance().getUsers().stream().filter(t->t.getId().equals(uid)).findFirst().get()
+                UserGenerator.getInstance().getUsers().stream().filter(t->t.getNickname().equals(uid)).findFirst().get()
                 );
 
         taskSocialServices.add(taskSocialService);

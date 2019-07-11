@@ -1,18 +1,32 @@
 package ru.popovich.emergencyassist.model;
 
-import java.time.Duration;
-import java.util.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import javax.persistence.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+
+@Entity
+@JsonPropertyOrder({"title","cityprice","countryprice","description", "duration", "oneTime", "periods", "enable"})
 public class SocialService {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
+    @Column(length = 1024)
     private String title;
 
     private String description;
 
     private float cost;
+
+    private float cityprice;
+
+    private float countryprice;
 
     private Duration duration; //SLA duration, plan
 
@@ -22,27 +36,53 @@ public class SocialService {
 
     private boolean enable = true;
 
-    private Date dateCreation;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn
+    private SocialServiceCatalog socialServiceCatalog;
 
-    private List<Date> dateEnable;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
+    private LocalDateTime dateCreation;
+
+    @JsonIgnore
+    private LocalDateTime dateEnable;
 
     public SocialService() {}
 
     public SocialService(String title, float cost) {
         this.title = title;
         this.cost = cost;
+        this.dateCreation = LocalDateTime.now();
     }
 
-    public SocialService(String id, String title, float cost){
+    public SocialService(String title, float cityprice, float countryprice) {
+        this.title = title;
+        this.cityprice = cityprice;
+        this.countryprice = countryprice;
+        this.dateCreation = LocalDateTime.now();
+    }
+
+    public SocialService(String title, float cost, int periods){
+        this(title, cost);
+        this.periods = periods;
+    }
+
+    public SocialService(Long id, String title, float cost){
         this(title, cost);
         this.id = id;
     }
 
-    public String getId() {
+    @Override
+    public String toString() {
+        return this.title + " " + this.countryprice + " " + this.cityprice;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -102,19 +142,43 @@ public class SocialService {
         this.enable = enable;
     }
 
-    public Date getDateCreation() {
+    public LocalDateTime getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
     }
 
-    public List<Date> getDateEnable() {
+    public LocalDateTime getDateEnable() {
         return dateEnable;
     }
 
-    public void setDateEnable(List<Date> dateEnable) {
+    public void setDateEnable(LocalDateTime dateEnable) {
         this.dateEnable = dateEnable;
+    }
+
+    public float getCityprice() {
+        return cityprice;
+    }
+
+    public void setCityprice(float cityprice) {
+        this.cityprice = cityprice;
+    }
+
+    public float getCountryprice() {
+        return countryprice;
+    }
+
+    public void setCountryprice(float countryprice) {
+        this.countryprice = countryprice;
+    }
+
+    public SocialServiceCatalog getSocialServiceCatalog() {
+        return socialServiceCatalog;
+    }
+
+    public void setSocialServiceCatalog(SocialServiceCatalog socialServiceCatalog) {
+        this.socialServiceCatalog = socialServiceCatalog;
     }
 }
