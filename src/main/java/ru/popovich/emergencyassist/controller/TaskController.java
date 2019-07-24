@@ -18,8 +18,6 @@ import java.util.List;
 @RequestMapping("/api/v1/task")
 public class TaskController {
 
-    List<TaskSocialService> taskSocialServices = TaskGenerator.getInstance().getTaskSocialServices();
-
     @Autowired
     private TaskSocialServiceDao taskSocialServiceDao;
 
@@ -31,37 +29,36 @@ public class TaskController {
 
     @GetMapping
     public List<TaskSocialService> taskSocialServices() {
-        return taskSocialServices;
+        return taskSocialServiceDao.findAll();
     }
 
     @GetMapping("{id}")
-    public TaskSocialService getTaskById(@PathVariable String id) { return getTaskByIdPriv(id); }
-
-    private TaskSocialService getTaskByIdPriv(String id){
-        return taskSocialServices.stream()
-                .filter(t->t.getId().equals(id))
-                .findFirst().get();
+    public TaskSocialService getTaskById(@PathVariable("id") TaskSocialService taskSocialService) {
+        return taskSocialService;
     }
 
     @PostMapping
-    public TaskSocialService addTask(@RequestBody TaskSocialService task){
-        taskSocialServices.add(task);
-        return task;
+    public void addTask(@RequestBody TaskSocialService task){
+        taskSocialServiceDao.save(task);
     }
 
     @PostMapping("/new")
-    public TaskSocialService addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
+    public void addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
 
-        Long sid = taskSocialServiceIds.getSid(); String uid = taskSocialServiceIds.getUid();
+        Long sid = taskSocialServiceIds.getSid();
+        String uid = taskSocialServiceIds.getUid();
 
-        TaskSocialService taskSocialService = new TaskSocialService(
-                String.valueOf(TaskGenerator.getInstance().getTaskSocialServices().size()+10),
-                SocialServiceGenerator.getInstance().getSocialServices().stream().filter(s->s.getId().equals(sid)).findFirst().get(),
-                UserGenerator.getInstance().getUsers().stream().filter(t->t.getNickname().equals(uid)).findFirst().get()
-                );
+        TaskSocialService taskSocialServiceDB = new TaskSocialService(
+                socialServiceDao.findById(sid).get(),
+                userDao.findByNickname(uid)
+        );
 
-        taskSocialServices.add(taskSocialService);
-
-        return taskSocialService;
+        taskSocialServiceDao.save(taskSocialServiceDB);
     }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") TaskSocialService taskSocialService){
+        taskSocialServiceDao.delete(taskSocialService);
+    }
+
 }

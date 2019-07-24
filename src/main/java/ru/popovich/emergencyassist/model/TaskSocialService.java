@@ -9,7 +9,7 @@ public class TaskSocialService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @ManyToOne
     private SocialService socialService;
@@ -38,7 +38,7 @@ public class TaskSocialService {
         this.dateCreate = new Date();
     }
 
-    public TaskSocialService(String id, SocialService socialService, User needy){
+    public TaskSocialService(Long id, SocialService socialService, User needy){
         this(socialService, needy);
         this.id = id;
     }
@@ -48,16 +48,16 @@ public class TaskSocialService {
         this.employee = employee;
     }
 
-    public TaskSocialService(String id, SocialService socialService, User needy, User employee){
+    public TaskSocialService(Long id, SocialService socialService, User needy, User employee){
         this(id, socialService, needy);
         this.employee = employee;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

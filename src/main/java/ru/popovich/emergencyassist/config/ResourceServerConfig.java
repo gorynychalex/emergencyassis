@@ -41,9 +41,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
 //                .anonymous().disable()
-                .cors()
-                .configurationSource(corsConfigurationSource())
-                .and()
+//                .cors()
+//                .configurationSource(corsConfigurationSource())
+//                .and()
 //                .addFilterAfter(simpleCorsFilter, CorsFilter.class)
 //                .csrf()
 //                .disable()
@@ -51,9 +51,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //                .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
 //                .antMatchers( "/oauth/token").permitAll()
 //                .and()
-//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/api/v1/organization/**","/index.html","/js/**").permitAll()
-//                .antMatchers("/**").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/api/v1/organization/**","/*","/js/**").permitAll()
+                .antMatchers("/api/v1/task/**").permitAll()
 //                .antMatchers("/api/**").authenticated()
                 .anyRequest()
                 .authenticated()
@@ -74,10 +74,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 //        corsConfiguration.applyPermitDefaultValues();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("http://localhost:3001");
+        corsConfiguration.addAllowedOrigin("http://localhost:3000");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addAllowedOrigin("*");
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
