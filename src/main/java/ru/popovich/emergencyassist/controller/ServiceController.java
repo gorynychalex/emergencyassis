@@ -4,8 +4,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.*;
+import ru.popovich.emergencyassist.model.Organization;
 import ru.popovich.emergencyassist.model.SocialService;
 import ru.popovich.emergencyassist.model.SocialServiceCatalog;
+import ru.popovich.emergencyassist.repository.OrganizationDao;
 import ru.popovich.emergencyassist.repository.SocialServiceCatalogDao;
 import ru.popovich.emergencyassist.repository.SocialServiceDao;
 
@@ -17,6 +19,9 @@ public class ServiceController {
 
     @Autowired
     private SocialServiceDao socialServiceDao;
+
+    @Autowired
+    private OrganizationDao organizationDao;
 
     @Autowired
     private SocialServiceCatalogDao socialServiceCatalogDao;
@@ -69,5 +74,10 @@ public class ServiceController {
             @PathVariable("id") SocialService socialService){
 
         return socialService;
+    }
+
+    @GetMapping("/organization/{id}")
+    public Organization getOrganization(@PathVariable("id") Organization organization){
+        return organization;
     }
 }

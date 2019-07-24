@@ -13,10 +13,6 @@ public class UserPersonal {
 
     private boolean active;
 
-    private String firstname;
-    private String middlename;
-    private String lastname;
-
     private UserSex userSex;
 
     @ElementCollection(targetClass = String.class)
@@ -60,30 +56,6 @@ public class UserPersonal {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getMiddlename() {
-        return middlename;
-    }
-
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
     }
 
     public UserSex getUserSex() {

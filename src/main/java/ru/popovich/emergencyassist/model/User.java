@@ -16,6 +16,10 @@ public class User {
 
     private String password;
 
+    private String firstname;
+    private String middlename;
+    private String lastname;
+
     private boolean enable = true;
 
     private String email;
@@ -215,5 +219,29 @@ public class User {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getMiddlename() {
+        return middlename;
+    }
+
+    public void setMiddlename(String middlename) {
+        this.middlename = middlename;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }

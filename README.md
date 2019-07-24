@@ -84,5 +84,20 @@ fetch('http://localhost:8080/api/v1/task',{method:'POST',body:JSON.stringify(tas
   https://gist.github.com/ivermac/922def70ed9eaf83799b68ab1a587595
   
   
+  ````
+  var headers=new Headers(); var formdata=new FormData(); formdata.append('grant_type','password'); formdata.append('username','popovich'); formdata.append('password','12345678'); headers.append('Authorization', 'Basic ' + btoa("client:secret")); fetch('http://localhost:8080/oauth/token', { method: 'POST', headers: headers, body: formdata }).then(r=>r.json()).then(r=>localStorage.setItem('access_token',r.access_token)); localStorage.access_token;
+  ````
+  
+  ````
+  fetch('/api/v1/organization/1',{ headers: {'Authorization': 'Bearer ' + localStorage.access_token}}).then(r=>r.json()).then(console.log)
+
+  ````
+  
+  ### 401 - ERROR !!! 
+  ##### Access to fetch at /oauth/token from origin has been blocked by CORS policy!!!
+  
+  #####Fix:
+  
+  https://stackoverflow.com/questions/44625488/spring-security-cors-error-when-enable-oauth2
   
   

@@ -16,6 +16,8 @@ import java.util.Collections;
 @Component
 public class CustomAuthProvider implements AuthenticationProvider {
 
+
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -25,6 +27,8 @@ public class CustomAuthProvider implements AuthenticationProvider {
 
         return new UsernamePasswordAuthenticationToken(name,pass, Collections.emptyList());
     }
+
+
 
     @Override
     public boolean supports(Class<?> authentication) {
