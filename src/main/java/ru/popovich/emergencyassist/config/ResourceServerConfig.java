@@ -52,6 +52,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //                .antMatchers( "/oauth/token").permitAll()
 //                .and()
                 .antMatchers("/api/v1/**").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/api/v1/organization/**","/*","/js/**").permitAll()
                 .antMatchers("/api/v1/task/**").permitAll()
 //                .antMatchers("/api/**").authenticated()
@@ -74,7 +75,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 //        corsConfiguration.applyPermitDefaultValues();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", corsConfiguration);

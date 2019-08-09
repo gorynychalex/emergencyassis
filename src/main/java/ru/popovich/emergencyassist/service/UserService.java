@@ -28,6 +28,9 @@ public class UserService implements UserDetailsService {
 
     List<User> users = UserGenerator.getInstance().getUsers();
 
+    public User getSimpleUser(){
+        return users.get(0);
+    }
 
 //    @PostConstruct
     public void init() { users.forEach(userDao::save); }

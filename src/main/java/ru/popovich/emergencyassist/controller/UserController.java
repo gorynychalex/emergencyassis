@@ -21,6 +21,11 @@ public class UserController {
 
     List<User> users = UserGenerator.getInstance().getUsers();
 
+    @GetMapping("/simple")
+    public User getSimpleUsers(){
+        return users.get(0);
+    }
+
     @GetMapping
     public List<User> getUsers() {
         return userDao.findAll();
@@ -42,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("{name}")
-    public User getUserByName(@PathVariable("user") User user) {
+    public User getUserByName(@PathVariable("name") User user) {
         return user; }
 
     private User getUserByIdPriv(String nickname){
