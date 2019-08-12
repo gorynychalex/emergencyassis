@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!--<img alt="Vue logo" src="../assets/logo.png">-->
+    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   name: 'home',
   components: {
     HelloWorld
+  },
+  mounted() {
+    this.$store.dispatch('FETCH_SERVICES', 'service')
+    this.$store.dispatch('FETCH_USERS', 'user')
+    this.$store.dispatch('FETCH_TASKS', 'task')
   }
 }
 </script>
