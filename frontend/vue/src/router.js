@@ -2,18 +2,37 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import SocialServices from './views/Services.vue'
+import Account from './components/account'
 import Login from './views/Login.vue'
 import Users from './views/Users.vue'
 import Tasks from './views/Tasks.vue'
+import store from './store'
 
 Vue.use(Router)
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/login')
+}
+
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: Home
     },
@@ -38,7 +57,14 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      beforeEnter: ifNotAuthenticated
+    },
+    {
+      path: '/account',
+      name: 'Account',
+      component: Account,
+      beforeEnter: ifAuthenticated,
     },
     {
       path: '/task',

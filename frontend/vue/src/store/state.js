@@ -1,5 +1,10 @@
 export default {
     itemServiceList: [],
     itemUserList: [],
-    itemTaskList: []
+    itemTaskList: [],
+
+    //Auth
+    token: localStorage.getItem('access-token') || '',
+    status: '',
+    hasLoadedOnce: false
 }

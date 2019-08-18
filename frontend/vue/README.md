@@ -42,3 +42,6 @@ $ cd vue
 ###  URL's
 * [“Best practices” авторизации для Vue](https://medium.com/@pavelgonzales/best-practices-авторизации-для-vue-8b769589001a)
 * [Authentication Best Practices for Vue](https://blog.sqreen.com/authentication-best-practices-vue/)
+
+* [article authentication-best-practices-vue](https://blog.sqreen.io/authentication-best-practices-vue/)
+* [demo authentication-best-practices-vue](https://github.com/sqreen/vue-authentication-example.git)

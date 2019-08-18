@@ -15,6 +15,8 @@
 </template>
 
 <script>
+    import {AUTH_REQUEST} from "../store/actions/auth";
+
     export default {
         name: "LoginForm",
         props: {
@@ -29,6 +31,11 @@
         methods: {
             login: function () {
                 const { username, password } = this
+
+                this.$store.dispatch(AUTH_REQUEST, { username, password })
+                    .then(()=>{
+                        this.$router.push('/')
+                    })
 
 
                 let formdata = new FormData()

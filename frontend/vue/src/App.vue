@@ -1,11 +1,23 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/home">Home</router-link> |
       <router-link to="/service">Services</router-link> |
-      <router-link to="/user">Users</router-link> |
-      <router-link to="/task">Tasks</router-link> |
-      <router-link to="/about">About</router-link>
+      <span v-if="isAuthenticated">
+        <router-link to="/user">Users</router-link> |
+        <router-link to="/task">Tasks</router-link> |
+      </span>
+
+      <router-link to="/about">About</router-link> |
+
+      <span v-if="!isAuthenticated">
+        <router-link to="/login">Login</router-link>
+      </span>
+
+      <span v-if="isAuthenticated">
+        <router-link to="/logout">Logout</router-link>
+      </span>
+
     </div>
 
     <b-container class="bv-example-row">
@@ -25,9 +37,19 @@
 
 <script>
 
+  import { mapGetters } from 'vuex'
+
 export default {
   name: 'app',
   components: {
+
+  },
+  computed: {
+    // isLoggedIn: ()=>{
+    //   this.$store.state.isAuthenticated
+    ...mapGetters([
+      'isAuthenticated'
+    ])
 
   }
 }

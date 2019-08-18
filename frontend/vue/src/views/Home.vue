@@ -2,22 +2,20 @@
   <div class="home">
     <!--<img alt="Vue logo" src="../assets/logo.png">-->
     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
+    <FetchDatas/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import FetchDatas from '@/components/FetchDatas.vue'
+import LoginForm from '@/components/LoginForm.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    FetchDatas
   },
-  mounted() {
-    this.$store.dispatch('FETCH_SERVICES', 'service')
-    this.$store.dispatch('FETCH_USERS', 'user')
-    this.$store.dispatch('FETCH_TASKS', 'task')
-  }
+
 }
 </script>
