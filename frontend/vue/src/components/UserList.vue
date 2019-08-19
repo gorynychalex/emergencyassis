@@ -1,13 +1,14 @@
 <template>
     <div>
         <!--<p>User list</p>-->
-        <b-table striped hover :items="itemUserList"/>
+        <b-table striped hover :items="USERS"/>
     </div>
 </template>
 
 <script>
 
     import { mapState } from 'vuex'
+    import { mapGetters } from 'vuex'
 
     export default {
         name: "UserList",
@@ -19,6 +20,9 @@
         computed: {
             ...mapState([
                 'itemUserList'
+            ]),
+            ...mapGetters([
+                'USERS'
             ])
         },
         mounted() {

@@ -14,7 +14,7 @@
         <router-link to="/login">Login</router-link>
       </span>
 
-      <span v-if="isAuthenticated">
+      <span v-if="isAuthenticated" @click="logout">
         <router-link to="/logout">Logout</router-link>
       </span>
 
@@ -38,6 +38,7 @@
 <script>
 
   import { mapGetters } from 'vuex'
+  import {AUTH_LOGOUT} from "./store/actions/auth";
 
 export default {
   name: 'app',
@@ -50,7 +51,11 @@ export default {
     ...mapGetters([
       'isAuthenticated'
     ])
-
+  },
+  methods: {
+    logout: function () {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'))
+    }
   }
 }
 </script>

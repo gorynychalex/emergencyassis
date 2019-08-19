@@ -1,6 +1,2 @@
 export const FETCH_SERVICES = 'FETCH_SERVICES'
-export const FETCH_USERS = 'FETCH_USERS'
-export const FETCH_TASKS = 'FETCH_TASKS'
 export const service = 'service'
-export const user = 'user'
-export const task = 'task'
