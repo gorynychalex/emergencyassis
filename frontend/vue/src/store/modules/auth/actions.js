@@ -43,6 +43,9 @@ export default {
                     reject(err)
                 })
             ;
+
+            dispatch('FETCH_USERS', 'user')
+            dispatch('FETCH_TASKS', 'task')
         })
     },
     [AUTH_LOGOUT]: ({commit, dispatch}) => {

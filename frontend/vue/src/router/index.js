@@ -26,11 +26,28 @@ const ifAuthenticated = (to, from, next) => {
   next('/login')
 }
 
+const ifLoadedDatas = (to, from, next) => {
+  if(!store.getters.hasLoadedServices){
+    console.log('here load datas')
+    store.dispatch('FETCH_SERVICES', 'service')
+    // store.dispatch('FETCH_USERS', 'user')
+    // store.dispatch('FETCH_TASKS', 'task')
+
+    next()
+    return
+  }
+  next('/home')
+}
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/',
+      name: 'root',
+      beforeEnter: ifLoadedDatas
+    },
     {
       path: '/home',
       name: 'home',

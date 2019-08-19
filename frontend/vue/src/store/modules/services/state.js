@@ -1,3 +1,5 @@
 export default {
-    itemServiceList: []
+    itemServiceList: [],
+    status: '',
+    hasLoadedServices: false
 }
