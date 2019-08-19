@@ -39,6 +39,15 @@ const ifLoadedDatas = (to, from, next) => {
   next('/home')
 }
 
+const afterLogin = (to, from, next) => {
+  if(store.getters.isAuthenticated){
+    console.log('forward to TASKS')
+    next()
+    return
+  }
+  next('/task')
+}
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -75,7 +84,8 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login,
-      beforeEnter: ifNotAuthenticated
+      beforeEnter: ifNotAuthenticated,
+      afterEnter: afterLogin
     },
     {
       path: '/account',

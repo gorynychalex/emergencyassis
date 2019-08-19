@@ -34,7 +34,7 @@
 
                 this.$store.dispatch(AUTH_REQUEST, { username, password })
                     .then(()=>{
-                        this.$router.push('/')
+                        this.$router.push('/task')
                     })
 
                 //
