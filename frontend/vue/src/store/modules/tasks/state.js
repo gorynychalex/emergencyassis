@@ -28,5 +28,42 @@ export default {
         enable: {
             label: 'Разрешено'
         }
-    }
+    },
+    fieldsTask: [
+
+        {
+            key: 'employee',
+            label: 'Работник'
+        },
+        {
+            key: 'needy',
+            label: 'Обслуживаемый'
+        },
+        {
+            key: 'socialService',
+            label: 'Услуга',
+            values: {
+            }
+        },
+        {
+            key: 'dateCreate',
+            label: 'Дата создания'
+        },
+        {
+            key: 'dateStart',
+            label: 'Начало исполнения заявки'
+        },
+        {
+            key: 'dateStop',
+            label: 'Окончание'
+        },
+        {
+            key: 'duration',
+            label: 'Продолжительность'
+        },
+        {
+            key: 'enable',
+            label: 'Разрешено'
+        }
+    ]
 }

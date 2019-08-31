@@ -1,13 +1,17 @@
 <template>
     <div>
-        <b-table small :items="TASKS" :fields="TASKSFIELDS" caption-top >
+        <b-table small :items="TASKS" :fields="TASKSFIELDS" show-empty>
 
-            <template slot="[socialService]" slot-scope="data">
-                {{ data.cityprice }}
+            <template slot="employee" slot-scope="data">
+                {{ data.value.firstname }} {{ data.value.middlename }}
             </template>
 
-            <template slot="[needy]" slot-scope="data">
-                {{ data.firstname }} {{ data.middlename }}
+            <template slot="needy" slot-scope="data">
+                {{ data.value.firstname }} {{ data.value.middlename }}
+            </template>
+
+            <template slot="socialService" slot-scope="data1">
+                {{ data1.value.title }}
             </template>
 
         </b-table>
