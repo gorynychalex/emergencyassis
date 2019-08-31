@@ -8,7 +8,8 @@ export default {
     },
     [USER_SUCCESS]: (state, resp) => {
         state.status = 'success'
-        Vue.set(state, 'profile', resp)
+        state.profile = resp
+        // Vue.set(state, 'profile', resp)
     },
     [USER_ERROR]: (state) => {
         state.status = 'error'

@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("{name}")
-    public User getUserByName(@PathVariable("user") User user) {
+    public User getUserByName(@PathVariable("name") User user) {
         return user; }
 
     private User getUserByIdPriv(String nickname){

@@ -3,6 +3,7 @@ import {AUTH_ERROR, AUTH_LOGOUT, AUTH_REQUEST, AUTH_SUCCESS} from "../../actions
 import store from "../../index";
 import {FETCH_USERS, REMOVE_USERS} from "../../actions/users";
 import {FETCH_TASKS, task} from "../../actions/tasks";
+import {USER_REQUEST} from "../../actions/profile";
 
 export default {
     [AUTH_REQUEST]: ({commit, dispatch}, user) => {
@@ -44,6 +45,9 @@ export default {
                     dispatch(FETCH_TASKS, task)
 
                     commit(AUTH_SUCCESS, r)
+
+                    //LOAD PROFILE
+                    dispatch(USER_REQUEST, user.username)
                 })
                 .catch(err => {
                     commit(AUTH_ERROR, err)

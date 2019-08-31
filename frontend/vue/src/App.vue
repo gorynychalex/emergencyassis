@@ -20,6 +20,10 @@
 
     </div>
 
+    <div v-if="isAuthenticated">
+      <Account/>
+    </div>
+
     <b-container class="bv-example-row">
       <b-jumbotron>
         <b-row>
@@ -38,12 +42,13 @@
 <script>
 
   import { mapGetters } from 'vuex'
-  import {AUTH_LOGOUT} from "./store/actions/auth";
+  import {AUTH_LOGOUT} from "./store/actions/auth"
+  import Account from './components/account'
 
 export default {
   name: 'app',
   components: {
-
+    Account
   },
   computed: {
     // isLoggedIn: ()=>{

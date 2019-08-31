@@ -1,5 +1,5 @@
 <template>
-    <b-table striped hover :items="SERVICES" />
+    <b-table striped :items="SERVICES" :fields="SERVICESFIELD" />
 </template>
 
 <script>
@@ -14,7 +14,7 @@
                 'itemServiceList'
             ]),
             ...mapGetters([
-                'SERVICES'
+                'SERVICES', 'SERVICESFIELD'
             ])
             // getServices(){ return this.$store.state.itemServiceList }
         },

@@ -5,13 +5,13 @@
 
 <template>
   <div>
-    <div class="headline">
+    <div v-if="getProfile.firstname">
+      <div class="headline">
       <!--<img src="../../assets/dog-profile.jpeg">-->
-      <h1>Your profile</h1>
+        <h3>Your profile</h3>
+      </div>
+        <p><strong>Name:</strong> {{getProfile.nickname}} {{getProfile.firstname}} {{getProfile.lastname}}</p>
     </div>
-    <p v-if="profile.name">
-      <strong>Name:</strong> {{profile.title}} {{profile.name}}
-    </p>
   </div>
 </template>
 
@@ -33,8 +33,10 @@
 
 export default {
     name: 'account',
-    computed: mapGetters({
-      // profile: state => state.user.profile
-    })
+    computed: {
+      ...mapGetters([
+              'getProfile'
+      ])
+    }
   }
 </script>
