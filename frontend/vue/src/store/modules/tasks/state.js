@@ -30,14 +30,14 @@ export default {
         }
     },
     fieldsTask: [
-
         {
             key: 'employee',
             label: 'Работник'
         },
         {
             key: 'needy',
-            label: 'Обслуживаемый'
+            label: 'Обслуживаемый',
+            sorted: true
         },
         {
             key: 'socialService',

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-table small :items="TASKS" :fields="TASKSFIELDS" show-empty>
+        <b-table small :items="TASKS" :fields="TASKSFIELDS">
 
             <template slot="employee" slot-scope="data">
                 {{ data.value.firstname }} {{ data.value.middlename }}
@@ -10,8 +10,8 @@
                 {{ data.value.firstname }} {{ data.value.middlename }}
             </template>
 
-            <template slot="socialService" slot-scope="data1">
-                {{ data1.value.title }}
+            <template slot="socialService" slot-scope="data">
+                <span :title='data.value.title'>{{ data.value.title.substring(0, 30) }} ...</span>
             </template>
 
         </b-table>
