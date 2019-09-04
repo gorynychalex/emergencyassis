@@ -1,31 +1,30 @@
 <template>
     <div>
-        <ul>
-            <li v-for="item in USERS" v-if="item.role == species">
-                {{ item.nickname }} {{ item.firstname }} {{ item.middlename }}
-            </li>
+        <b-form-group label="">
+            <b-form-radio-group buttons stacked button-variant="outline-primary" v-model="selected" @input="$emit('selectuser',selected)">
+                <b-form-radio v-for="user in users" name="user-radios" :value="user.nickname" v-if="user.role===role" >{{ user.firstname }} {{ user.middlename }} {{ user.lastname }}</b-form-radio>
+            </b-form-radio-group>
+        </b-form-group>
 
-            <b-form-radio-group v-model="selected" :options="USERS" button stacked name="radio-btn-stacked"/>
-        </ul>
+
+        <!--<b-form-group>-->
+        <!--<b-form-radio-group v-model="selected" :options="USERS" valueField="nickname" :html-field="`${'middlename'}`" buttons stacked name="radio-btn-stacked" button-variant="outline-primary"/>-->
+        <!--</b-form-group>-->
     </div>
 </template>
 
 <script>
 
-    import { mapGetters } from 'vuex'
-
     export default {
         name: "UserListForChoice",
-        props: ['species'],
+        props: {
+            users: Array,
+            role: String,
+        },
         data(){
             return {
-                selected: 'selectUser'
+                selected: '',
             }
-        },
-        computed: {
-            ...mapGetters([
-                'USERS'
-            ])
         }
     }
 </script>

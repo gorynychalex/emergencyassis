@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-table small :items="TASKS" :fields="TASKSFIELDS">
+
+        <b-table small :items="tasklist" :fields="TASKSFIELDS">
 
             <template slot="employee" slot-scope="data">
                 {{ data.value.firstname }} {{ data.value.middlename }}
@@ -53,11 +54,12 @@
 
     export default {
         name: "TaskComponent",
+        props:['tasklist'],
         computed: {
             ...mapGetters([
-                'TASKS','TASKSFIELDS'
+                'TASKSFIELDS'
             ])
-        }
+        },
     }
 </script>
 
