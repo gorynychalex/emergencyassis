@@ -1,15 +1,44 @@
 <template>
     <div>
-        <UserList role="EMPLOYEE" :users="USERS" @selectuser="($event)=>this.selectemployee=$event"/>
-        Социальный работник: {{ selectemployee }}
+        <b-container>
 
-        <UserList role="HARDUP" :users="userslist" @selectuser="($event)=>this.selecthardup=$event" v-if="userslist.length"/>
-        Обслуживаемый: {{ selecthardup }}
+            <b-row>
+
+                <b-col>
+                    <UserList
+                            role="HARDUP"
+                            title="Облуживаемые"
+                            :users="userslist"
+                            @selectuser="($event)=>this.selecthardup=$event"
+                            v-if="userslist.length"
+                    />
+                </b-col>
+
+                <b-col>
+                    <UserList
+                            role="EMPLOYEE"
+                            title="Социальные работники"
+                            :users="USERS"
+                            @selectuser="($event)=>this.selectemployee=$event"
+                    />
+                    <!--{{ selectemployee? "Выбран: " + selectemployee : '' }}-->
+                </b-col>
 
 
 
-        <br> Планируется предоставить услуг: {{ tasklist? tasklist.length : '' }}
+            </b-row>
+
+        </b-container>
+
+        <b-card
+            header="Обслуживаемый"
+            :title="selecthardupfullname"
+            v-if="selecthardup"
+        >
+        <!--<h3> {{ selecthardupfullname? selecthardupfullname : '' }}</h3>-->
+        <!--<br>  {{ tasklist? "Планируется предоставить услуг: " + tasklist.length : '' }}-->
         <TaskComponent :tasklist="tasklist" v-if="selecthardup"/>
+        </b-card>
     </div>
 </template>
 
@@ -25,6 +54,7 @@
                 userslist: '',
                 selectemployee: '',
                 selecthardup: '',
+                selecthardupfullname: '',
                 tasklist: ''
             }
         },
@@ -47,8 +77,12 @@
                 }
             },
             selecthardup: function (newVal, oldVal) {
-                if(newVal)
-                this.tasklist = this.TASKS.filter(x=>x.needy.nickname == newVal)
+                if(newVal) {
+                    this.tasklist = this.TASKS.filter(x => x.needy.nickname == newVal)
+                    let user = this.USERS[this.USERS.findIndex(x => x.nickname == newVal)]
+                    this.selecthardupfullname = user.firstname + " " + user.lastname + " " + user.middlename
+                }
+
             }
         }
     }

@@ -1,21 +1,21 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/home">Home</router-link> |
-      <router-link to="/service">Services</router-link> |
+      <router-link to="/home">Главная</router-link> |
+      <router-link to="/service">Тарифы</router-link> |
       <span v-if="isAuthenticated">
-        <router-link to="/user">Users</router-link> |
-        <router-link to="/task">Tasks</router-link> |
+        <router-link to="/user">Пользователи</router-link> |
+        <router-link to="/task">Услуги</router-link> |
       </span>
 
-      <router-link to="/about">About</router-link> |
+      <router-link to="/about">Журнал</router-link> |
 
       <span v-if="!isAuthenticated">
         <router-link to="/login">Login</router-link>
       </span>
 
       <span v-if="isAuthenticated" @click="logout">
-        <router-link to="/logout">Logout</router-link>
+        <router-link to="/logout">Выход</router-link>
       </span>
 
     </div>

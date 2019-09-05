@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-form-group label="">
+        <b-form-group :label="title">
             <b-form-radio-group buttons stacked button-variant="outline-primary" v-model="selected" @input="$emit('selectuser',selected)">
                 <b-form-radio v-for="user in users" name="user-radios" :value="user.nickname" v-if="user.role===role" >{{ user.firstname }} {{ user.middlename }} {{ user.lastname }}</b-form-radio>
             </b-form-radio-group>
@@ -20,6 +20,7 @@
         props: {
             users: Array,
             role: String,
+            title: String
         },
         data(){
             return {
