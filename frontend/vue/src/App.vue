@@ -11,7 +11,7 @@
       <router-link to="/about">Журнал</router-link> |
 
       <span v-if="!isAuthenticated">
-        <router-link to="/login">Login</router-link>
+        <router-link to="/login">Вход</router-link>
       </span>
 
       <span v-if="isAuthenticated" @click="logout">
