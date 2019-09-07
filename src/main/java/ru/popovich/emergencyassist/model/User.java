@@ -36,6 +36,9 @@ public class User {
 
     private String sub;
 
+    @Version
+    private Long version;
+
     @ElementCollection(targetClass = LocalDateTime.class)
     private List<LocalDateTime> dateEnable;
 
@@ -273,5 +276,13 @@ public class User {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

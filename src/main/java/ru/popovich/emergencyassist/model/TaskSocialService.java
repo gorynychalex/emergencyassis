@@ -30,6 +30,9 @@ public class TaskSocialService {
 
     private boolean enable = true;
 
+    @Version
+    private Long version;
+
     public TaskSocialService() {}
 
     public TaskSocialService(SocialService socialService, User needy) {
@@ -123,5 +126,13 @@ public class TaskSocialService {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

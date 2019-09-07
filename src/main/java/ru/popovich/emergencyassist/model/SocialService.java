@@ -36,6 +36,9 @@ public class SocialService {
 
     private boolean enable = true;
 
+    @Version
+    private Long version;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn
@@ -180,5 +183,13 @@ public class SocialService {
 
     public void setSocialServiceCatalog(SocialServiceCatalog socialServiceCatalog) {
         this.socialServiceCatalog = socialServiceCatalog;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
