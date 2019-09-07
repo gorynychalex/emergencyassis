@@ -19,8 +19,6 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-    List<User> users = UserGenerator.getInstance().getUsers();
-
     @GetMapping
     public List<User> getUsers() {
         return userDao.findAll();
@@ -42,18 +40,17 @@ public class UserController {
     }
 
     @GetMapping("{name}")
-    public User getUserByName(@PathVariable("user") User user) {
+    public User getUserByName(@PathVariable("name") User user) {
         return user; }
 
-    private User getUserByIdPriv(String nickname){
-        return users.stream()
-                .filter(t->t.getNickname().equals(nickname))
-                .findFirst().get();
-    }
 
     @PostMapping
-    public User addTask(@RequestBody User user){
-        users.add(user);
-        return user;
+    public void add(@RequestBody User user){
+        userDao.save(user);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") User user){
+        userDao.delete(user);
     }
 }
