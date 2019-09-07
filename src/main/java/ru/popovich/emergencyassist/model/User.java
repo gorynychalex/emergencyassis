@@ -22,6 +22,12 @@ public class User {
 
     private boolean enable = true;
 
+    private String address;
+
+    private String phone;
+
+    private String mobile;
+
     private String email;
 
     private Locale locale;
@@ -243,5 +249,29 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
