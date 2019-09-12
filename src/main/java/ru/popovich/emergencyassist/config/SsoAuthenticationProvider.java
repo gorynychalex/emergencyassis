@@ -32,6 +32,7 @@ public class SsoAuthenticationProvider implements AuthenticationProvider {
     public PrincipalExtractor principalExtractor(UserDao userDao){
         return map -> {
             String name = (String) map.get("name");
+            Long id = (Long) map.get("id");
             User user1 = userDao.findById(name).orElseGet(()->{
 
                 User newUser = new User();

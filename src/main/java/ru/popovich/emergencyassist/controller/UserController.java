@@ -1,7 +1,9 @@
 package ru.popovich.emergencyassist.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.ResourceAccessException;
 import ru.popovich.emergencyassist.dbtest.UserGenerator;
 import ru.popovich.emergencyassist.model.TaskSocialService;
 import ru.popovich.emergencyassist.model.User;
@@ -29,28 +31,29 @@ public class UserController {
         userDao.save(new User(user, "123", UserRole.HARDUP));
     }
 
-    @GetMapping("/add/usertestallpriv")
-    public void addALLPRIVUser(){
-        User user = new User("popovich","12345678");
-        List<UserRole> roles = new ArrayList<>();
-        roles.add(UserRole.EMPLOYEE); roles.add(UserRole.ADMIN);
-        user.setRoles(roles);
-        user.setEmail("gorynychalex@gmail.com");
-        userDao.save(user);
-    }
-
     @GetMapping("{name}")
-    public User getUserByName(@PathVariable("name") User user) {
-        return user; }
-
+    public User getUserByName(@PathVariable("name") User user) { return user; }
 
     @PostMapping
-    public void add(@RequestBody User user){
-        userDao.save(user);
+    public User add(@RequestBody User user){
+        return userDao.save(user);
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") User user){
+    @PutMapping("{nickname}")
+    public User update(@PathVariable("nickname") User userOriginal,
+                       @RequestBody User user){
+        BeanUtils.copyProperties(user, userOriginal, "nickname");
+
+        User user1 = userDao.save(userOriginal);
+
+        return user1;
+    }
+
+    @DeleteMapping("{nickname}")
+    public void delete(@PathVariable("nickname") User user){
+
+        user.getNickname();
+
         userDao.delete(user);
     }
 }
