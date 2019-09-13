@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -57,27 +58,28 @@ public class RestApiUserTest {
 
     @Before
     public void init(){
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+//        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
         getUser = new User("hardup","12345678", UserRole.HARDUP);
         getUser.setLastname("Hardup");
+//        userDao.save(getUser);
 
         when(userDao.findById("hardup")).thenReturn(Optional.of(getUser));
     }
 
     @Test
-    public void givenUser_whenGetUser_thenReturnJsonArray() throws Exception{
+    public void givenUser_whenGetUser_thenReturnJsonArray() throws Exception {
 
         BDDMockito.given(userDao.getOne("hardup")).willReturn(getUser);
 
         mockMvc.perform(MockMvcRequestBuilders.get(getRootUrl() + "/" + getUser.getNickname())
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+//                .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.nickname", is(getUser.getNickname())))
         ;
-
-        verify(userDao, times(1)).findByNickname(getUser.getNickname());
+//
+//        verify(userDao, times(1)).findByNickname(getUser.getNickname());
 
     }
 

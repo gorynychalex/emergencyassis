@@ -39,13 +39,13 @@ public class UserEntityRepositoryTest {
         userDao.save(admin);
 
         // Second user
-        User hardup = new User("hardup","12345678", UserRole.HARDUP);
+        User hardup = new User("hardupuser","12345678", UserRole.HARDUP);
         hardup.setLastname("Hardeup");
         userDao.save(hardup);
 
         // Find user from Repository
         User admin1 = userDao.findByNickname("admin");
-        User hardup1 = userDao.findByNickname("hardup");
+        User hardup1 = userDao.findByNickname("hardupuser");
 
         // Test Repository NotNull
         assertThat(userDao).isNotNull();
