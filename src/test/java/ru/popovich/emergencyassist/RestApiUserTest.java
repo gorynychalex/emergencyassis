@@ -70,13 +70,14 @@ public class RestApiUserTest {
     @Test
     public void givenUser_whenGetUser_thenReturnJsonArray() throws Exception {
 
-        BDDMockito.given(userDao.getOne("hardup")).willReturn(getUser);
+//        BDDMockito.given(userDao.getOne("hardup")).willReturn(getUser);
 
         mockMvc.perform(MockMvcRequestBuilders.get(getRootUrl() + "/" + getUser.getNickname())
                 .accept(MediaType.APPLICATION_JSON))
-//                .andDo(print())
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.nickname", is(getUser.getNickname())))
+                .andDo(print())
         ;
 //
 //        verify(userDao, times(1)).findByNickname(getUser.getNickname());
