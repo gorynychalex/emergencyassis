@@ -2,6 +2,7 @@ package ru.popovich.emergencyassist.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 import ru.popovich.emergencyassist.dbtest.UserGenerator;
@@ -26,15 +27,12 @@ public class UserController {
         return userDao.findAll();
     }
 
-    @GetMapping("/add/{user}")
-    public void addUser(@PathVariable String user){
-        userDao.save(new User(user, "123", UserRole.HARDUP));
-    }
-
     @GetMapping("{name}")
+    @ResponseStatus(HttpStatus.OK)
     public User getUserByName(@PathVariable("name") User user) { return user; }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public User add(@RequestBody User user){
         return userDao.save(user);
     }

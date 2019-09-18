@@ -1,5 +1,8 @@
 package ru.popovich.emergencyassist;
 /**
+ * Integration Test
+ * User Controller
+ *
  * https://www.javaguides.net/2018/09/spring-boot-2-rest-apis-integration-testing.html
  *
  * https://sysout.ru/testirovanie-spring-boot-prilozheniya-s-testresttemplate/

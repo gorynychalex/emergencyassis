@@ -1,6 +1,8 @@
 package ru.popovich.emergencyassist;
 
 /**
+ * Data Jpa (Repository) Test
+ *
  * https://reflectoring.io/spring-boot-data-jpa-test/
  *
  * Spring Data JPA Repository Testing using Spring Boot @DataJpaTest

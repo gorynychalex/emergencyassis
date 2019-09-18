@@ -7,6 +7,7 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -28,8 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @AutoConfigureMockMvc
-//@WebMvcTest
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebMvcTest
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class RestApiOrganizationTest {
 
@@ -49,7 +50,7 @@ public class RestApiOrganizationTest {
     Organization organization;
 
     private String getRootUrl() {
-        return "http://localhost:" + port + "/api/v1/user";
+        return "/api/v1/organization";
     }
 
     @Before
@@ -60,19 +61,24 @@ public class RestApiOrganizationTest {
         organization.setId("10");
         organization.setName("ПЦСОН");
 
-        when(organizationDao.findById("10")).thenReturn(Optional.of(organization));
+//        doReturn(organization).when(organizationDao).findById("10");
+
+
     }
 
     @Test
     public void givenOrganization_whenGetUser_thenReturnJsonArray() throws Exception {
 
+        when(organizationDao.findById("10")).thenReturn(Optional.of(organization));
+
         BDDMockito.given(organizationDao.getOne("10")).willReturn(organization);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(getRootUrl() + "/" + "1")
+
+        mockMvc.perform(MockMvcRequestBuilders.get(getRootUrl() + "/" + "10")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(jsonPath("$.name", is(organization.getName())))
+                .andExpect(jsonPath("$.name", is(organization.getName())))
         ;
 
         verify(organizationDao, times(1)).findById(organization.getId());
