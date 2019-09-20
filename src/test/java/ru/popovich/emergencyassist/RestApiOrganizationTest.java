@@ -61,11 +61,11 @@ public class RestApiOrganizationTest {
         mockMvc = MockMvcBuilders.standaloneSetup(serviceController).build();
 
         organization = new Organization();
-        organization.setId("10");
+        organization.setId(10L);
         organization.setName("ПЦСОН");
 
 //        doReturn(organization).when(organizationDao).findById("10");
-        when(organizationDao.findById("10")).thenReturn(Optional.ofNullable(organization));
+        when(organizationDao.findById(10L)).thenReturn(Optional.ofNullable(organization));
     }
 
     @Test

@@ -9,7 +9,7 @@ public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     private String name;
 
@@ -45,11 +45,11 @@ public class Organization {
 
     public Organization() {}
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
