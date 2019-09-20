@@ -33,7 +33,8 @@ public class SsoAuthenticationProvider implements AuthenticationProvider {
         return map -> {
             String name = (String) map.get("name");
             Long id = (Long) map.get("id");
-            User user1 = userDao.findById(name).orElseGet(()->{
+//            User user1 = userDao.findById(name).orElseGet(()->{
+            User user1 = userDao.findById(id).orElseGet(()->{
 
                 User newUser = new User();
 

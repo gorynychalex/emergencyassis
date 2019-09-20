@@ -25,7 +25,7 @@ public class SocialServiceCatalog {
     private String description;
 
 
-    @OneToMany(mappedBy = "socialServiceCatalog", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "socialServiceCatalog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SocialService> socialService;
 
     @ManyToOne

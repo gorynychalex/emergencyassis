@@ -12,6 +12,9 @@ import java.util.Locale;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String nickname;
 
     private String password;
@@ -84,6 +87,14 @@ public class User {
     @Override
     public String toString() {
         return this.nickname + " " + this.enable;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNickname() {
