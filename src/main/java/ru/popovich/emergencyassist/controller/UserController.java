@@ -42,16 +42,9 @@ public class UserController {
                        @RequestBody User user){
         BeanUtils.copyProperties(user, userOriginal, "nickname");
 
-        User user1 = userDao.save(userOriginal);
-
-        return user1;
+        return userDao.save(userOriginal);
     }
 
     @DeleteMapping("{nickname}")
-    public void delete(@PathVariable("nickname") User user){
-
-        user.getNickname();
-
-        userDao.delete(user);
-    }
+    public void delete(@PathVariable("nickname") User user){ userDao.delete(user); }
 }

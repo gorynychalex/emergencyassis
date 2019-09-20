@@ -17,22 +17,9 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 @SpringBootTest
 public class EmergencyassistApplicationTests {
 
-	@Autowired
-	private TestRestTemplate testRestTemplate;
-
 	@Test
 	public void contextLoads() {
 	}
 
-	@Test
-	public void noAuth(){
-		String orgId = "1";
-		String request = "/api/v1/organization/" + orgId;
-
-		ResponseEntity<Organization> organizationResponseEntity =
-				testRestTemplate.getForEntity(request, Organization.class);
-
-//		assertEquals(HttpStatus.OK, organizationResponseEntity.getStatusCode());
-	}
 
 }

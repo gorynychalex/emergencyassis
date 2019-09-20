@@ -11,12 +11,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import ru.popovich.emergencyassist.config.SecurityConfig;
 import ru.popovich.emergencyassist.controller.ServiceController;
 import ru.popovich.emergencyassist.model.Organization;
 import ru.popovich.emergencyassist.repository.OrganizationDao;
@@ -29,9 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @AutoConfigureMockMvc
-@WebMvcTest
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@WebMvcTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
+@Import(SecurityConfig.class)
 public class RestApiOrganizationTest {
 
 
@@ -43,9 +46,9 @@ public class RestApiOrganizationTest {
 
     @InjectMocks
     private ServiceController serviceController;
-
-    @LocalServerPort
-    private int port;
+//
+//    @LocalServerPort
+//    private int port;
 
     Organization organization;
 
@@ -62,20 +65,22 @@ public class RestApiOrganizationTest {
         organization.setName("ПЦСОН");
 
 //        doReturn(organization).when(organizationDao).findById("10");
-
-
+        when(organizationDao.findById("10")).thenReturn(Optional.ofNullable(organization));
     }
 
     @Test
     public void givenOrganization_whenGetUser_thenReturnJsonArray() throws Exception {
 
-        when(organizationDao.findById("10")).thenReturn(Optional.of(organization));
+//        when(organizationDao.findById("10")).thenReturn(Optional.of(organization));
+//
+//        BDDMockito.given(organizationDao.getOne("10")).willReturn(organization);
 
-        BDDMockito.given(organizationDao.getOne("10")).willReturn(organization);
-
+        Organization organization111 = organizationDao.getOne(organization.getId());
 
         mockMvc.perform(MockMvcRequestBuilders.get(getRootUrl() + "/" + "10")
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON)
+
+        )
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.name", is(organization.getName())))

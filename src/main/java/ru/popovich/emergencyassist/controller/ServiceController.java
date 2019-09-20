@@ -21,9 +21,6 @@ public class ServiceController {
     private SocialServiceDao socialServiceDao;
 
     @Autowired
-    private OrganizationDao organizationDao;
-
-    @Autowired
     private SocialServiceCatalogDao socialServiceCatalogDao;
 
     @GetMapping({"/service","/service/list"})
@@ -44,7 +41,7 @@ public class ServiceController {
     {
         BeanUtils.copyProperties(socialService, socialServiceFromDb, "id");
 
-        return socialServiceDao.save(socialService);
+        return socialServiceDao.save(socialServiceFromDb);
     }
 
     @DeleteMapping("/service/{id}")
@@ -76,8 +73,4 @@ public class ServiceController {
         return socialService;
     }
 
-    @GetMapping("/organization/{id}")
-    public Organization getOrganization(@PathVariable("id") Organization organization){
-        return organization;
-    }
 }
