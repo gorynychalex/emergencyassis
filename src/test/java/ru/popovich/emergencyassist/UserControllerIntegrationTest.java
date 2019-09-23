@@ -132,6 +132,26 @@ public class UserControllerIntegrationTest {
     }
 
     @Test
+    public void testPutUserByName(){
+
+        createTestUser();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        User getUserDao = userDao.findByNickname(nickname);
+
+        getUserDao.setLastname("Modified");
+
+        HttpEntity<User> entityUser = new HttpEntity<>(getUserDao, headers);
+
+        ResponseEntity<User> responseEntity = testRestTemplate.exchange(getRootUrl()+"/{id}", HttpMethod.PUT, entityUser, User.class, getUserDao.getId());
+
+        assertEquals(responseEntity.getBody().getLastname(), getUserDao.getLastname());
+
+    }
+
+    @Test
     public void testDeleteUserByName(){
 
         createTestUser();

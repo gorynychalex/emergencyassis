@@ -1,6 +1,8 @@
 package ru.popovich.emergencyassist.model;
 
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import ru.popovich.emergencyassist.model.personal.UserPersonal;
 
 import javax.persistence.*;
@@ -42,7 +44,8 @@ public class User {
     @Version
     private Long version;
 
-    @ElementCollection(targetClass = LocalDateTime.class)
+    @Transient
+    @ElementCollection(targetClass = LocalDateTime.class, fetch = FetchType.LAZY)
     private List<LocalDateTime> dateEnable;
 
     @OneToOne
@@ -50,17 +53,21 @@ public class User {
 
     private UserRole role;
 
-    @ElementCollection(targetClass = UserRole.class,fetch = FetchType.EAGER)
+    @Transient
+    @ElementCollection(targetClass = UserRole.class,fetch = FetchType.LAZY)
     private List<UserRole> roles;
 
     @ManyToOne
     private Organization organization;
 
+
+    @Transient
     @ManyToMany
-    @ElementCollection(targetClass = Organization.class)
+    @ElementCollection(targetClass = Organization.class, fetch = FetchType.LAZY)
     private List<Organization> organizations;
 
-    @ElementCollection(targetClass = LocalDateTime.class)
+    @Transient
+    @ElementCollection(targetClass = LocalDateTime.class, fetch = FetchType.LAZY)
     private List<LocalDateTime> authDateTime;
 
     private String descriptions;
@@ -68,6 +75,7 @@ public class User {
 
 //    private List<UserRelation> userRelations;
 
+    @Transient
     @ElementCollection(targetClass = User.class)
     private List<User> users;
 
