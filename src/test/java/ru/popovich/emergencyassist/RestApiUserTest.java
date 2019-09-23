@@ -85,7 +85,7 @@ public class RestApiUserTest {
         getUser = new User("hardup","12345678", UserRole.HARDUP);
         getUser.setLastname("Hardup");
 
-        when(userDao.findById("hardup")).thenReturn(Optional.of(getUser));
+        when(userDao.findByNickname("hardup")).thenReturn(getUser);
 
         //building the mock response
         //https://springbootdev.com/2018/02/22/spring-boot-test-writing-unit-tests-for-the-controller-layers-with-webmvctest/
@@ -96,10 +96,10 @@ public class RestApiUserTest {
     @Test
     public void addUser() throws Exception{
 
-        assertNotNull(userDao.findById("hardup"));
-        assertEquals(getUser.getNickname(), userDao.findById("hardup").get().getNickname());
-        assertEquals(getUser.getLastname(), userDao.findById("hardup").get().getLastname());
-        verify(userDao,times(3)).findById("hardup");
+        assertNotNull(userDao.findByNickname("hardup"));
+        assertEquals(getUser.getNickname(), userDao.findByNickname("hardup").getNickname());
+        assertEquals(getUser.getLastname(), userDao.findByNickname("hardup").getLastname());
+        verify(userDao,times(3)).findByNickname("hardup");
 
 //        userDao.save(getUser);
 //        verify(userDao, times(1)).save(getUser);
@@ -117,7 +117,7 @@ public class RestApiUserTest {
     @Test
     public void givenUser_whenGetUser_thenReturnJsonArray() throws Exception {
 
-        BDDMockito.given(userDao.findById("hardup")).willReturn(Optional.of(getUser));
+        BDDMockito.given(userDao.findByNickname("hardup")).willReturn(getUser);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get(getRootUrl() + "/" + getUser.getNickname())
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

@@ -8,16 +8,21 @@ package ru.popovich.emergencyassist;
  * https://sysout.ru/testirovanie-spring-boot-prilozheniya-s-testresttemplate/
  */
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.model.UserRole;
+import ru.popovich.emergencyassist.repository.UserDao;
+
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -30,19 +35,39 @@ public class UserControllerIntegrationTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
+    @Autowired
+    private UserDao userDao;
+
     @LocalServerPort
     private int port;
+
+    String nickname = "hardup";
+
+    User hardup, getUser;
 
     private String getRootUrl(){
         return "http://localhost:" + port + "/api/v1/user";
     }
 
+    @After
+    public void resetDb() {
+        if(userDao.findByNickname(nickname) != null)
+            userDao.delete(userDao.findByNickname(nickname));
+    }
+
+    public void createTestUser(){
+
+        if(userDao.findByNickname(nickname) == null) {
+            hardup = new User("hardup", "12345678", UserRole.HARDUP);
+            hardup.setLastname("Hardeup");
+            userDao.save(hardup);
+        }
+    }
+
     @Test
     public void whenCreateUser_thenStatus201(){
 
-        User hardup = new User("hardup1","12345678", UserRole.HARDUP);
-        hardup.setLastname("Hardeup");
-//        userDao.save(hardup);
+        createTestUser();
 
         ResponseEntity<User> userResponseEntity = testRestTemplate.postForEntity(getRootUrl(), hardup, User.class);
 
@@ -55,11 +80,13 @@ public class UserControllerIntegrationTest {
     @Test
     public void testGetAllUsers(){
 
-        HttpHeaders headers = new HttpHeaders();
+        createTestUser();
 
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+//        HttpHeaders headers = new HttpHeaders();
+//
+//        HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-        ResponseEntity<String> responseEntity = testRestTemplate.exchange(getRootUrl(), HttpMethod.GET, entity, String.class );
+        ResponseEntity<List<User>> responseEntity = testRestTemplate.exchange(getRootUrl(), HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>(){});
 
         assertNotNull(responseEntity.getBody());
 
@@ -68,11 +95,56 @@ public class UserControllerIntegrationTest {
     }
 
     @Test
+    public void testGetAllUsersToString(){
+
+        createTestUser();
+
+        HttpHeaders headers = new HttpHeaders();
+
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+
+        ResponseEntity<String> responseEntity = testRestTemplate.exchange(getRootUrl(), HttpMethod.GET, entity, String.class );
+
+        responseEntity.getBody();
+
+        assertNotNull(responseEntity.getBody());
+
+        assertThat(responseEntity.getStatusCode(), equalTo(HttpStatus.OK));
+    }
+
+
+    @Test
     public void testGetUserByName(){
-        String nickname = "popovich";
-        User user = testRestTemplate.getForObject(getRootUrl()+"/" + nickname, User.class);
-        System.out.println(user.getNickname());
-        assertNotNull(user);
-        assertEquals(user.getNickname(),nickname);
+
+        createTestUser();
+
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<User> entityUser = new HttpEntity<>(null, headers);
+
+        User getUserDao = userDao.findByNickname(nickname);
+
+        User getUser = testRestTemplate.getForObject(getRootUrl()+"/{id}", User.class, getUserDao.getId());
+
+        assertNotNull(getUser);
+
+        assertEquals(getUser.getNickname(),nickname);
+    }
+
+    @Test
+    public void testDeleteUserByName(){
+
+        createTestUser();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<User> entityUser = new HttpEntity<>(null, headers);
+
+        User getUserDao = userDao.findByNickname(nickname);
+
+        ResponseEntity<User> responseEntity = testRestTemplate.exchange(getRootUrl()+"/{id}", HttpMethod.DELETE, entityUser, User.class, getUserDao.getId());
+
+        assertNotNull(responseEntity);
+
     }
 }
