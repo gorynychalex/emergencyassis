@@ -74,7 +74,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 //        corsConfiguration.applyPermitDefaultValues();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", corsConfiguration);

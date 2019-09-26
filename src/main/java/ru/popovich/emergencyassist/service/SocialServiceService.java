@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.popovich.emergencyassist.model.SocialService;
 import ru.popovich.emergencyassist.model.SocialServiceCatalog;
 import ru.popovich.emergencyassist.repository.SocialServiceCatalogDao;
 import ru.popovich.emergencyassist.repository.SocialServiceDao;
 
+import javax.transaction.TransactionScoped;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

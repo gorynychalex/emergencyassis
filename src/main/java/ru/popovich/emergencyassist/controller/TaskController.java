@@ -60,5 +60,4 @@ public class TaskController {
     public void delete(@PathVariable("id") TaskSocialService taskSocialService){
         taskSocialServiceDao.delete(taskSocialService);
     }
-
 }

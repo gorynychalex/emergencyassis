@@ -15,6 +15,8 @@
 </template>
 
 <script>
+    import {AUTH_REQUEST} from "../store/actions/auth";
+
     export default {
         name: "LoginForm",
         props: {
@@ -30,19 +32,24 @@
             login: function () {
                 const { username, password } = this
 
+                this.$store.dispatch(AUTH_REQUEST, { username, password })
+                    .then(()=>{
+                        this.$router.push('/task')
+                    })
 
-                let formdata = new FormData()
-                let headers=new Headers()
-                formdata.append('grant_type','password')
-                // formdata.append('nickname',username)
-                formdata.append('username',username)
-                formdata.append('password',password)
-                headers.append('Authorization', 'Basic ' + btoa("client:secret"))
-
-                fetch('http://localhost:8080/oauth/token',
-                    { method: 'POST', headers: headers, body: formdata, redirect: 'follow' })
-                    .then(r=>r.json())
-                    .then(r=>localStorage.setItem('access_token',r.access_token));
+                //
+                // let formdata = new FormData()
+                // let headers=new Headers()
+                // formdata.append('grant_type','password')
+                // // formdata.append('nickname',username)
+                // formdata.append('username',username)
+                // formdata.append('password',password)
+                // headers.append('Authorization', 'Basic ' + btoa("client:secret"))
+                //
+                // fetch('http://localhost:8080/oauth/token',
+                //     { method: 'POST', headers: headers, body: formdata, redirect: 'follow' })
+                //     .then(r=>r.json())
+                //     .then(r=>localStorage.setItem('access_token',r.access_token));
 
 
 
