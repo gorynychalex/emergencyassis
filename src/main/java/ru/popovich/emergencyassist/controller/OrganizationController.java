@@ -2,6 +2,7 @@ package ru.popovich.emergencyassist.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.popovich.emergencyassist.model.Organization;
 import ru.popovich.emergencyassist.repository.OrganizationDao;
@@ -26,6 +27,10 @@ public class OrganizationController {
     public Organization getOrganization(@PathVariable("id") Organization organization){
         return organization;
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Organization add(@RequestBody Organization organization){ return organizationDao.save(organization); }
 
     @PutMapping("{id}")
     public Organization editOrganization(@PathVariable("id") Organization organizationDb, @RequestBody Organization organization){
