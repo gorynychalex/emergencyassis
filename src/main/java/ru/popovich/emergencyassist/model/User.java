@@ -41,6 +41,7 @@ public class User {
 
     private String sub;
 
+    @JsonIgnore
     @Version
     private Long version;
 

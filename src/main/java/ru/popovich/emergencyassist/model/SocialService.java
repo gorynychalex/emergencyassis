@@ -36,6 +36,7 @@ public class SocialService {
 
     private boolean enable = true;
 
+    @JsonIgnore
     @Version
     private Long version;
 

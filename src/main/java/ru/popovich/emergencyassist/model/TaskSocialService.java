@@ -1,5 +1,7 @@
 package ru.popovich.emergencyassist.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.Duration;
 import java.util.Date;
@@ -30,6 +32,7 @@ public class TaskSocialService {
 
     private boolean enable = true;
 
+    @JsonIgnore
     @Version
     private Long version;
 
