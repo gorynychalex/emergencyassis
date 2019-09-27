@@ -8,7 +8,7 @@ export default {
         commit(USER_REQUEST)
 
 
-        fetch("/api/v1/user/" + username)
+        fetch("/api/v1/user/name/" + username)
             .then(r=> {
                     // console.log(r.url)
                     return r.json()
