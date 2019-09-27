@@ -45,7 +45,6 @@ public class User {
     @Version
     private Long version;
 
-    @Transient
     @ElementCollection(targetClass = LocalDateTime.class, fetch = FetchType.LAZY)
     private List<LocalDateTime> dateEnable;
 
@@ -54,20 +53,18 @@ public class User {
 
     private UserRole role;
 
-    @Transient
-    @ElementCollection(targetClass = UserRole.class,fetch = FetchType.LAZY)
+//    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.LAZY)
     private List<UserRole> roles;
 
     @ManyToOne
     private Organization organization;
 
-
-    @Transient
+    @JsonBackReference
     @ManyToMany
     @ElementCollection(targetClass = Organization.class, fetch = FetchType.LAZY)
     private List<Organization> organizations;
 
-    @Transient
     @ElementCollection(targetClass = LocalDateTime.class, fetch = FetchType.LAZY)
     private List<LocalDateTime> authDateTime;
 
@@ -76,7 +73,7 @@ public class User {
 
 //    private List<UserRelation> userRelations;
 
-    @Transient
+    @JsonBackReference
     @ElementCollection(targetClass = User.class)
     private List<User> users;
 

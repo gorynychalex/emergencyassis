@@ -49,12 +49,14 @@ public class UserService implements UserDetailsService {
         userBuilder.password(passwordEncoder.encode(user.getPassword()));
 //        userBuilder.password(passwordEncoder.encode(user.getPassword()));
 
-        userBuilder.authorities(user
-                .getRoles()
-                .stream()
-                .map(UserRole::name)
-                .toArray(String[]::new)
-        );
+        userBuilder.authorities(new String[]{String.valueOf(user.getRole())});
+
+//        userBuilder.authorities(user
+//                .getRoles()
+//                .stream()
+//                .map(UserRole::name)
+//                .toArray(String[]::new)
+//        );
 
         return userBuilder.build();
     }

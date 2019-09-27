@@ -34,7 +34,7 @@ public class Organization {
     private List<String> openHours;
 
     @ManyToMany
-    @ElementCollection(targetClass = User.class)
+    @ElementCollection(targetClass = User.class, fetch = FetchType.LAZY)
     private List<User> users;
 
     private String description;

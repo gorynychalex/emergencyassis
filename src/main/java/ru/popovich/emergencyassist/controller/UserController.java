@@ -27,9 +27,22 @@ public class UserController {
         return userDao.findAll();
     }
 
-    @GetMapping("{name}")
+    @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User getUserByName(@PathVariable("name") User user) { return user; }
+    public User getUserById(@PathVariable("id") User user) { return user; }
+
+    @GetMapping("/name/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public User getUserByName(@PathVariable("name") String name) {
+
+        User user = userDao.findByNickname(name);
+
+        if(user.getRoles()!=null)
+        user.getRoles().size();
+
+        return user;
+    }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,14 +50,14 @@ public class UserController {
         return userDao.save(user);
     }
 
-    @PutMapping("{nickname}")
-    public User update(@PathVariable("nickname") User userOriginal,
+    @PutMapping("{id}")
+    public User update(@PathVariable("id") User userOriginal,
                        @RequestBody User user){
-        BeanUtils.copyProperties(user, userOriginal, "nickname");
+        BeanUtils.copyProperties(user, userOriginal, "id");
 
         return userDao.save(userOriginal);
     }
 
-    @DeleteMapping("{nickname}")
-    public void delete(@PathVariable("nickname") User user){ userDao.delete(user); }
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") User user){ userDao.delete(user); }
 }
