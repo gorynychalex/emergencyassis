@@ -12,10 +12,13 @@ export default {
         })
     },
     [USER_ADD]: ({ commit, dispatch }, user) => {
-        return new Promise((resolve, reject)=>{
-            commit(USER_ADD)
 
-            fetch("/api/v1/user",{method: 'POST',body: JSON.stringify(user), headers: new Headers({'Content-type': 'application/json'})})
+        return new Promise((resolve, reject)=>{
+
+
+            commit(USER_ADD, user)
+
+            fetch("/api/v1/user",{method: 'POST',body: user, headers: new Headers({'Content-type': 'application/json'})})
 
             console.log("Here is add user: " + user)
 

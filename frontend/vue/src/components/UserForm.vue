@@ -71,13 +71,23 @@
             ></b-form-input>
         </b-form-group>
 
-      <b-form-group id="input-group-locality" label="Местность:" label-for="input-locality">
+      <!--<b-form-group id="input-group-locality" label="Местность:" label-for="input-locality">-->
+        <!--<b-form-select-->
+          <!--id="input-locality"-->
+          <!--v-model="form.locale"-->
+          <!--:options="locale"-->
+          <!--required-->
+        <!--&gt;</b-form-select>-->
+      <!--</b-form-group>-->
+
+      <b-form-group id="input-group-role" label="Основная роль:" label-for="input-role">
         <b-form-select
-          id="input-locality"
-          v-model="form.locale"
-          :options="locale"
+          id="input-role"
+          v-model="form.role"
+          :options="role"
           required
-        ></b-form-select>
+        >
+        </b-form-select>
       </b-form-group>
 
       <b-form-group id="input-group-roles" label="Роли пользователя: ">
@@ -113,9 +123,11 @@
                     email: '',
                     phone: '',
                     address: '',
+                    role: '',
                     roles: [],
                 },
                 locale: [{ text: 'Выберите одно', value: null }, 'город', 'село'],
+                role: [{ text: 'Выбор основной роли:', value: null }, { text: 'Обслуживаемый', value: 'HARDUP' },{ text: 'Социальный работник', value: 'EMPLOYEE' }],
                 show: true
             }
         },
@@ -145,6 +157,7 @@
         this.form.middlename = ''
         this.form.password = ''
         this.form.locale = null
+        this.form.role = null
         this.form.roles = []
         // Trick to reset/clear native browser form validation state
         this.show = false
