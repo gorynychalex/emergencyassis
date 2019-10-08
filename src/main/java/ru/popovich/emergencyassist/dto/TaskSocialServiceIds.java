@@ -1,15 +1,25 @@
 package ru.popovich.emergencyassist.dto;
 
+/**
+ * Class DTO to impact TASK for Hardup user
+ *
+ *
+ */
+
 public class TaskSocialServiceIds {
-    private String uid;
+
+    private Long userHardupId;
+
+    private Long userEmployeeId;
+
     private Long sid;
 
-    public String getUid() {
-        return uid;
+    public Long getUserHardupId() {
+        return userHardupId;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUserHardupId(Long userHardupId) {
+        this.userHardupId = userHardupId;
     }
 
     public Long getSid() {
@@ -18,5 +28,13 @@ public class TaskSocialServiceIds {
 
     public void setSid(Long sid) {
         this.sid = sid;
+    }
+
+    public Long getUserEmployeeId() {
+        return userEmployeeId;
+    }
+
+    public void setUserEmployeeId(Long userEmployeeId) {
+        this.userEmployeeId = userEmployeeId;
     }
 }

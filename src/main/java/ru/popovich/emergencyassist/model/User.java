@@ -73,9 +73,16 @@ public class User {
 
 //    private List<UserRelation> userRelations;
 
+    //USERS - MAIN LIST
+//    @ElementCollection(targetClass = User.class)
     @JsonBackReference
-    @ElementCollection(targetClass = User.class)
+    @ManyToMany
     private List<User> users;
+
+    //USERS - HELPER LIST
+    @JsonBackReference
+    @ManyToMany
+    private List<User> users2;
 
     public User() {
     }
@@ -301,5 +308,13 @@ public class User {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public List<User> getUsers2() {
+        return users2;
+    }
+
+    public void setUsers2(List<User> users2) {
+        this.users2 = users2;
     }
 }

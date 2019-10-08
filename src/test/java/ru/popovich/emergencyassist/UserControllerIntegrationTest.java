@@ -22,6 +22,7 @@ import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.model.UserRole;
 import ru.popovich.emergencyassist.repository.UserDao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -66,15 +67,12 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void whenCreateUser_thenStatus201(){
-
         createTestUser();
-
         ResponseEntity<User> userResponseEntity = testRestTemplate.postForEntity(getRootUrl(), hardup, User.class);
 
         assertThat(userResponseEntity.getStatusCode(), is(HttpStatus.CREATED));
         assertEquals(userResponseEntity.getBody().getNickname(), hardup.getNickname());
         assertThat(userResponseEntity.getBody().getLastname(), is(hardup.getLastname()));
-
     }
 
     @Test
@@ -143,6 +141,8 @@ public class UserControllerIntegrationTest {
 
         getUserDao.setLastname("Modified");
 
+        getUserDao.getDateEnable();
+
         HttpEntity<User> entityUser = new HttpEntity<>(getUserDao, headers);
 
         ResponseEntity<User> responseEntity = testRestTemplate.exchange(getRootUrl()+"/{id}", HttpMethod.PUT, entityUser, User.class, getUserDao.getId());
@@ -166,5 +166,33 @@ public class UserControllerIntegrationTest {
 
         assertNotNull(responseEntity);
 
+    }
+
+    @Test
+    public void createUsers_andPopulateInnerUsers_thenStatus201_andDeleteThem () throws RuntimeException {
+
+        User hardup1 = new User("hardup11", "12345678", UserRole.HARDUP);
+        userDao.save(hardup1);
+        User employee1 = new User("employee11", "12345678", UserRole.EMPLOYEE);
+        employee1.setUsers(new ArrayList<User>(){{add(employee1);}});
+        userDao.save(employee1);
+        User employee2 = new User("employee21", "12345678", UserRole.EMPLOYEE);
+        employee2.setUsers(new ArrayList<User>(){{add(hardup1);}});
+        userDao.save(employee2);
+
+        ResponseEntity<User> userResponseEntityHardup1 = testRestTemplate.postForEntity(getRootUrl(), hardup1, User.class);
+        ResponseEntity<User> userResponseEntityEmployee1 = testRestTemplate.postForEntity(getRootUrl(), employee1, User.class);
+        ResponseEntity<User> userResponseEntityEmployee2 = testRestTemplate.postForEntity(getRootUrl(), employee2, User.class);
+
+        assertThat(userResponseEntityHardup1.getStatusCode(), is(HttpStatus.CREATED));
+        assertThat(userResponseEntityEmployee1.getStatusCode(), is(HttpStatus.CREATED));
+        assertThat(userResponseEntityEmployee2.getStatusCode(), is(HttpStatus.CREATED));
+        assertEquals(userResponseEntityHardup1.getBody().getNickname(), hardup1.getNickname());
+        assertEquals(userResponseEntityEmployee1.getBody().getNickname(), employee1.getNickname());
+        assertEquals(userResponseEntityEmployee2.getBody().getNickname(), employee2.getNickname());
+
+        userDao.delete(userDao.findByNickname(hardup1.getNickname()));
+        userDao.delete(userDao.findByNickname(employee1.getNickname()));
+        userDao.delete(userDao.findByNickname(employee2.getNickname()));
     }
 }

@@ -1,13 +1,10 @@
 package ru.popovich.emergencyassist.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.popovich.emergencyassist.dbtest.SocialServiceGenerator;
-import ru.popovich.emergencyassist.dbtest.TaskGenerator;
-import ru.popovich.emergencyassist.dbtest.UserGenerator;
 import ru.popovich.emergencyassist.dto.TaskSocialServiceIds;
 import ru.popovich.emergencyassist.model.TaskSocialService;
-import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.repository.SocialServiceDao;
 import ru.popovich.emergencyassist.repository.TaskSocialServiceDao;
 import ru.popovich.emergencyassist.repository.UserDao;
@@ -43,18 +40,30 @@ public class TaskController {
     }
 
     @PostMapping("/new")
-    public void addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
+    public TaskSocialService addTask(@RequestBody TaskSocialServiceIds taskSocialServiceIds){
 
         Long sid = taskSocialServiceIds.getSid();
-        String uid = taskSocialServiceIds.getUid();
+        Long userHardupId = taskSocialServiceIds.getUserHardupId();
+        Long userEmployeeId = taskSocialServiceIds.getUserEmployeeId();
 
-        TaskSocialService taskSocialServiceDB = new TaskSocialService(
-                socialServiceDao.findById(sid).get(),
-                userDao.findByNickname(uid)
+        TaskSocialService taskSocialServiceDB =
+                new TaskSocialService(
+                        socialServiceDao.findById(sid).get(),
+                        userDao.findById(userHardupId).get(),
+                        userDao.findById(userEmployeeId).get()
         );
 
-        taskSocialServiceDao.save(taskSocialServiceDB);
+        return taskSocialServiceDao.save(taskSocialServiceDB);
     }
+
+    @PutMapping("{id}")
+    public TaskSocialService update(@PathVariable("id") TaskSocialService taskSocialServiceInit,
+                       @RequestBody TaskSocialService taskSocialService){
+        BeanUtils.copyProperties(taskSocialService, taskSocialServiceInit, "id");
+
+        return taskSocialServiceDao.save(taskSocialServiceInit);
+    }
+
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") TaskSocialService taskSocialService){
