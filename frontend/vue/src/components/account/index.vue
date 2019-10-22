@@ -8,9 +8,13 @@
     <div v-if="getProfile.firstname">
       <div class="headline">
       <!--<img src="../../assets/dog-profile.jpeg">-->
-        <h3>Your profile</h3>
+        {{ getProfile.role == 'HARDUP' ? "Обслуживаемый" : getProfile.role == 'EMPLOYEE'? "Социальный работник": getProfile.role == 'SPECIALIST' ? "Специалист" : "Профиль" }}
+
+        :
+
+        {{getProfile.firstname}} {{getProfile.lastname}}
+
       </div>
-        <p><strong>Name:</strong> {{getProfile.nickname}} {{getProfile.firstname}} {{getProfile.lastname}}</p>
     </div>
   </div>
 </template>

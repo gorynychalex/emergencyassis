@@ -27,7 +27,7 @@
     <b-container class="bv-example-row">
       <b-jumbotron>
         <b-row>
-          <b-col><img alt="Vue logo" src="./assets/logo_pcson_small.png"></b-col>
+          <b-col><router-link to="/"><img alt="Vue logo" src="./assets/logo_pcson_small.png"></router-link></b-col>
           <b-col>Приморский центр социального обслуживания населения</b-col>
         </b-row>
       </b-jumbotron>

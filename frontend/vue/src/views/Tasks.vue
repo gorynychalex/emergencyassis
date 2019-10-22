@@ -30,6 +30,8 @@
 
         </b-container>
 
+
+
         <b-card
             header="Обслуживаемый"
             :title="selecthardupfullname"
@@ -37,8 +39,15 @@
         >
         <!--<h3> {{ selecthardupfullname? selecthardupfullname : '' }}</h3>-->
         <!--<br>  {{ tasklist? "Планируется предоставить услуг: " + tasklist.length : '' }}-->
-        <TaskComponent :tasklist="tasklist" v-if="selecthardup"/>
+
+        <TaskComponent
+                v-if="selecthardup"
+                :tasklist="tasklist"
+                :selectemployee="selectemployee"
+                :selecthardup="selecthardup"
+        />
         </b-card>
+
     </div>
 </template>
 
@@ -51,11 +60,12 @@
         name: "Tasks",
         data() {
             return {
-                userslist: '',
+                userslist: [],
                 selectemployee: '',
                 selecthardup: '',
                 selecthardupfullname: '',
-                tasklist: ''
+                tasklist: '',
+
             }
         },
         computed: {
@@ -66,11 +76,11 @@
         },
         components: {
             UserList,
-            TaskComponent
+            TaskComponent,
         },
         watch: {
             selectemployee: function(newVal, oldVal) {
-                this.userslist=this.USERS[this.USERS.findIndex(x=>x.nickname==newVal)].users
+                this.userslist=this.USERS[this.USERS.findIndex(x=>x.id==newVal.id)].users
                 if(!this.userslist.length){
                     this.selecthardup = ''
                     this.tasklist=''
@@ -78,8 +88,9 @@
             },
             selecthardup: function (newVal, oldVal) {
                 if(newVal) {
-                    this.tasklist = this.TASKS.filter(x => x.needy.nickname == newVal)
-                    let user = this.USERS[this.USERS.findIndex(x => x.nickname == newVal)]
+                    // Replace to Vuex getters
+                    this.tasklist = this.TASKS.filter(x => x.needy.id == newVal.id)
+                    let user = this.USERS[this.USERS.findIndex(x => x.id == newVal.id)]
                     this.selecthardupfullname = user.firstname + " " + user.lastname + " " + user.middlename
                 }
 

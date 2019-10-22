@@ -30,9 +30,62 @@ export default {
         }
     },
     fieldsTask: [
+
+
+        {
+          key: 'index',
+          label: 'п/п'
+        },
         {
             key: 'employee',
-            label: 'Работник'
+            label: 'Работник',
+            sortable: true
+        },
+        {
+            key: 'needy',
+            label: 'Обслуживаемый',
+            sorted: true
+        },
+        {
+            key: 'socialService',
+            label: 'Услуга',
+            values: {
+            }
+        },
+        {
+            key: 'dateCreate',
+            label: 'Дата создания'
+        },
+        {
+            key: 'dateStart',
+            label: 'Начало исполнения заявки'
+        },
+        {
+            key: 'dateStop',
+            label: 'Окончание'
+        },
+        {
+            key: 'duration',
+            label: 'Продолжительность'
+        },
+        {
+            key: 'enable',
+            label: 'Разрешено'
+        },
+        {
+            key: 'id',
+            label: 'id'
+        },
+    ],
+    fieldsTaskNoId: [
+        {
+            key: 'index',
+            label: 'п/п',
+        },
+        {
+            key: 'employee',
+            label: 'Работник',
+            sortable: true
         },
         {
             key: 'needy',

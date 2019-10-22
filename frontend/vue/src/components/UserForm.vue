@@ -137,7 +137,7 @@
 
           alert(JSON.stringify(this.form))
 
-          console.log("here is add user in db")
+          // console.log("here is add user in db")
           this.$store.dispatch(USER_ADD, JSON.stringify(this.form))
                     .then(()=>{
                         this.$router.push('/user')
