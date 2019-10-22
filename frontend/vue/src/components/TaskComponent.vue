@@ -30,7 +30,7 @@
             <b-button v-if="!taskaddbuttonshow && taskaddformshow" type="submit" variant="outline-primary">Удалить</b-button>
 
             <!--SHOW SELECTED ITEMS-->
-            <br>{{ selectfordone }}
+            <!--<br>{{ selectfordone }}-->
             <br>
         <template v-slot:label v-if="taskaddformshow">
             <!--<b>Choose your flavours:</b><br>-->
@@ -46,20 +46,7 @@
             </b-form-checkbox>
         </template>
 
-        <b-table small :items="TASKS.filter(x=>x.needy.id===selecthardup.id)" :fields="taskaddformshow?TASKSFIELDS:TASKSFIELDS_noID">
-
-            <template v-if="taskaddformshow" slot="id" slot-scope="data">
-
-                <!--CHOICES FOR DELETE-->
-                <b-form-checkbox-group v-model="selectfordelete">
-                <b-form-checkbox
-
-                        :value='data.value'
-                >
-                </b-form-checkbox>
-                </b-form-checkbox-group>
-
-            </template>
+        <b-table small :items="TASKS.filter(x=>x.needy.id===selecthardup.id)" :fields="TASKSFIELDS_noID">
 
             <!-- A virtual column -->
             <template slot="index" slot-scope="data">
@@ -168,12 +155,13 @@
             deleteItem(event){
                 event.preventDefault()
 
-                // console.log("Delete items: " + this.selectfordelete)
+                console.log("Delete items: " + this.selectfordone)
 
                 //Delete items
                 // First check length items and one-by-one delete
-                if(this.selectfordelete.length !== 0)
-                    this.$store.dispatch(TASKS_DELETE, this.selectfordelete)
+
+                if(this.selectfordone.length !== 0)
+                    this.$store.dispatch(TASKS_DELETE, this.selectfordone)
                         .then(()=>this.$route.push('/task'))
                         .catch(e=>console.log(e))
 
@@ -190,16 +178,16 @@
                 this.taskaddformshow = false
 
                 // Reset select items
-                this.selectfordelete=[]
+                this.selectfordone=[]
             },
             toggleAllForDelete(checked){
                 console.log(checked)
-                this.selectfordelete = checked ? this.tasklist.map(x=>x.id):[]
+                this.selectfordone = checked ? this.tasklist.map(x=>x.id):[]
             }
         },
         watch:{
             // Every select item for delete watch: all selected or not
-            selectfordelete(newVal, oldVal){
+            selectfordone(newVal, oldVal){
                 if(newVal.length === 0) {
                     this.indeterminate = false
                     this.selectfordeleteall = false
