@@ -2,9 +2,11 @@ package ru.popovich.emergencyassist.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import ru.popovich.emergencyassist.dto.TaskSocialServiceIds;
 import ru.popovich.emergencyassist.model.TaskSocialService;
+import ru.popovich.emergencyassist.model.User;
 import ru.popovich.emergencyassist.repository.SocialServiceDao;
 import ru.popovich.emergencyassist.repository.TaskSocialServiceDao;
 import ru.popovich.emergencyassist.repository.UserDao;
@@ -24,7 +26,7 @@ public class TaskController {
     @Autowired
     private SocialServiceDao socialServiceDao;
 
-    @GetMapping
+    @GetMapping({"/","/list"})
     public List<TaskSocialService> taskSocialServices() {
         return taskSocialServiceDao.findAll();
     }
@@ -32,6 +34,16 @@ public class TaskController {
     @GetMapping("{id}")
     public TaskSocialService getTaskById(@PathVariable("id") TaskSocialService taskSocialService) {
         return taskSocialService;
+    }
+
+    @GetMapping("/list/user/{uid}")
+    public List<TaskSocialService> getTasksByUserId(@PathVariable("uid") User user){
+        return taskSocialServiceDao.findTaskSocialServicesByUser(user);
+    }
+
+    @GetMapping("/list/needy/{unid}/employee/{ueid}")
+    public List<TaskSocialService> getTasksByUserId(@PathVariable("unid") User userNeedy, @PathVariable("ueid") User userEmployee){
+        return taskSocialServiceDao.findTaskSocialServicesByUserNeedyUserEmployee(userNeedy, userEmployee);
     }
 
     @PostMapping
