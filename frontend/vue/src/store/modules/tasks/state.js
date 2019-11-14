@@ -100,11 +100,12 @@ export default {
         },
         {
             key: 'dateCreate',
-            label: 'Дата создания'
+            label: 'Дата создания',
+            formatter: value => value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
         },
         {
             key: 'dateStart',
-            label: 'Начало исполнения заявки'
+            label: 'Начало исполнения заявки',
         },
         {
             key: 'dateStop',

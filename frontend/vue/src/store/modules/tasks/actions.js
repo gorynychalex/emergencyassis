@@ -1,4 +1,4 @@
-import {task, TASK_ADD, TASK_DELETE, TASKS_DELETE} from "../../actions/tasks";
+import {task, TASK_ADD, TASK_DELETE, TASK_DONE, TASKS_DELETE} from "../../actions/tasks";
 import { FETCH_TASKS } from "../../actions/tasks";
 import apiCall from "../../../utils/api";
 
@@ -42,5 +42,13 @@ export default {
         })
 
         // commit(TASKS_DELETE, tasks)
+    },
+    [TASK_DONE]: ({commit, dispatch}, task) => {
+        return new Promise((resolve, reject) => {
+
+            fetch("/api/v1/task/" + task.id, {method: PUT, body: JSON.stringify(task), headers: new Headers({'Content-type': 'application/json'})})
+
+            commit(TASK_DONE, task)
+        })
     }
 }

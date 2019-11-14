@@ -1,4 +1,4 @@
-import {FETCH_TASKS, TASK_ADD, TASK_DELETE, TASKS_DELETE} from "../../actions/tasks"
+import {FETCH_TASKS, TASK_ADD, TASK_DELETE, TASK_DONE, TASKS_DELETE} from "../../actions/tasks"
 
 export default {
     [FETCH_TASKS]: (state, itemTaskList) => {
@@ -21,5 +21,8 @@ export default {
         console.log("task list length: " + state.itemTaskList.length)
         var item = state.itemTaskList.splice(index,1)
         console.log(item)
+    },
+    [TASK_DONE]: (state, task)=> {
+        state.itemTaskList.find(x=>x.id == task.id).enable = !state.itemTaskList.find(x=>x.id == task.id).enable
     }
 }

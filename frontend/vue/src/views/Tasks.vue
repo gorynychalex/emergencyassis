@@ -89,7 +89,7 @@
             selecthardup: function (newVal, oldVal) {
                 if(newVal) {
                     // Replace to Vuex getters
-                    this.tasklist = this.TASKS.filter(x => x.needy.id == newVal.id)
+                    // this.tasklist = this.TASKS.filter(x => x.needy.id == newVal.id)
                     let user = this.USERS[this.USERS.findIndex(x => x.id == newVal.id)]
                     this.selecthardupfullname = user.firstname + " " + user.lastname + " " + user.middlename
                 }
