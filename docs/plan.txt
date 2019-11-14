@@ -1,0 +1,12 @@
+Plan for application creation
+1. Common description 
+2. Specification
+3. User case diagramm
+4. Class diagramm
+5. App First implementation 
+5.1. Client app - ORDERS
+5.2. Social employee - TASKS
+5.3. Admin common object: catalog, services
+5.4. Reports
+6. App second implementation
+7. App development: machine learning, speak spell define
