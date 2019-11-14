@@ -26,7 +26,7 @@ public class TaskController {
     @Autowired
     private SocialServiceDao socialServiceDao;
 
-    @GetMapping({"/","/list"})
+    @GetMapping({"","/","/list"})
     public List<TaskSocialService> taskSocialServices() {
         return taskSocialServiceDao.findAll();
     }
