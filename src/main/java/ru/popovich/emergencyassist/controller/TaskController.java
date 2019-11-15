@@ -71,7 +71,7 @@ public class TaskController {
     @PutMapping("{id}")
     public TaskSocialService update(@PathVariable("id") TaskSocialService taskSocialServiceInit,
                        @RequestBody TaskSocialService taskSocialService){
-        BeanUtils.copyProperties(taskSocialService, taskSocialServiceInit, "id");
+        BeanUtils.copyProperties(taskSocialService, taskSocialServiceInit, "id","socialService");
 
         return taskSocialServiceDao.save(taskSocialServiceInit);
     }
