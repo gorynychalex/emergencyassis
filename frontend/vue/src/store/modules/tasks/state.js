@@ -95,21 +95,30 @@ export default {
         {
             key: 'socialService',
             label: 'Услуга',
-            values: {
-            }
         },
         {
             key: 'dateCreate',
             label: 'Дата создания',
-            formatter: value => value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
+            formatter: value => value && isNaN(value) && value.split("T").length > 1?
+                value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
+                :
+                value
         },
         {
             key: 'dateStart',
             label: 'Начало исполнения заявки',
+            formatter: value => value && isNaN(value) && value.split("T").length > 1?
+                value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
+                :
+                value
         },
         {
             key: 'dateStop',
-            label: 'Окончание'
+            label: 'Окончание',
+            formatter: value => value && isNaN(value) && value.split("T").length > 1?
+                value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
+                :
+                value
         },
         {
             key: 'duration',

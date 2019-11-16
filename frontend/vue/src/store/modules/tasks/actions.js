@@ -46,7 +46,7 @@ export default {
     [TASK_DONE]: ({commit, dispatch}, task) => {
         return new Promise((resolve, reject) => {
 
-            fetch("/api/v1/task/" + task.id, {method: PUT, body: JSON.stringify(task), headers: new Headers({'Content-type': 'application/json'})})
+            fetch("/api/v1/task/" + task.id, {method: "PUT", body: JSON.stringify(task), headers: new Headers({'Content-type': 'application/json'})})
 
             commit(TASK_DONE, task)
         })

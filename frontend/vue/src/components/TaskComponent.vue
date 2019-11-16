@@ -82,7 +82,7 @@
                     {{ data.item.enable? "Выполняется":"Выполнено" }}
                 </b-button>
                 <b-form-checkbox-group v-model="data.item.enable">
-                <b-form-checkbox  @change="enablechange(data.item.id, data.item.enable)">
+                <b-form-checkbox>
 
                     {{ data.item.id }} {{ data.item.enable }}
 
@@ -133,6 +133,8 @@
             enablechange(task, enable){
                 console.log("data.item.id: " + task.id)
                 console.log("data.item.enable: " + enable)
+
+                enable && !task.dateStop? task.dateStop=new Date() : task.dateStop=''
 
                 alert(JSON.stringify(task))
 
