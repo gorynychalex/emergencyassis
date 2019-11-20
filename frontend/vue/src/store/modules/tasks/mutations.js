@@ -16,9 +16,9 @@ export default {
     [TASK_DELETE]: (state, task) => {
 
         var index=state.itemTaskList.findIndex(t=>t.id=task)
-        console.log("task: " + task)
-        console.log("index : " + index)
-        console.log("task list length: " + state.itemTaskList.length)
+        // console.log("task: " + task)
+        // console.log("index : " + index)
+        // console.log("task list length: " + state.itemTaskList.length)
         var item = state.itemTaskList.splice(index,1)
         console.log(item)
     },

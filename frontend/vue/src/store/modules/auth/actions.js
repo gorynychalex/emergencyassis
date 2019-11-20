@@ -48,6 +48,8 @@ export default {
 
                     //LOAD PROFILE
                     dispatch(USER_REQUEST, user.username)
+
+                    resolve(user)
                 })
                 .catch(err => {
                     commit(AUTH_ERROR, err)

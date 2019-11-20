@@ -141,7 +141,7 @@
 
                 this.$store.dispatch(TASK_DONE, task)
                     .then(()=>{
-                        this.$router.push('/service')
+                        this.$router.push('/task')
                     })
                     .catch(e=>
                         console.log(e)

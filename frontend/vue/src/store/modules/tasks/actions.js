@@ -12,8 +12,6 @@ export default {
 
             var newtask={"sid":task.socialService.id,"userHardupId":task.needy.id, "userEmployeeId":task.employee.id}
 
-            var newtask1;
-
             fetch("/api/v1/task/new",{method: 'POST',body: JSON.stringify(newtask), headers: new Headers({'Content-type': 'application/json'})})
                 .then(r=>r.json())
                 .then(r=>resolve(r.id))
@@ -33,15 +31,13 @@ export default {
             tasks.forEach( taskid=> {
 
                 fetch("/api/v1/task/" + taskid, {method: "DELETE"})
+                    .then(r=>resolve(r))
 
                 commit(TASK_DELETE, taskid)
             })
 
-            // commit(TASKS_DELETE, tasks)
-
         })
 
-        // commit(TASKS_DELETE, tasks)
     },
     [TASK_DONE]: ({commit, dispatch}, task) => {
         return new Promise((resolve, reject) => {
@@ -49,6 +45,7 @@ export default {
             commit(TASK_DONE, task)
 
             fetch("/api/v1/task/" + task.id, {method: "PUT", body: JSON.stringify(task), headers: new Headers({'Content-type': 'application/json'})})
+                .then(r=>resolve(r))
 
 
         })
