@@ -23,6 +23,12 @@ export default {
         console.log(item)
     },
     [TASK_DONE]: (state, task)=> {
-        state.itemTaskList.find(x=>x.id == task.id).enable = !state.itemTaskList.find(x=>x.id == task.id).enable
+
+        let taskid = state.itemTaskList.findIndex(x=>x.id == task.id)
+
+        state.itemTaskList[taskid].enable = !state.itemTaskList[taskid].enable
+
+        !state.itemTaskList[taskid].enable ?
+        state.itemTaskList[taskid].dateStop = new Date() : state.itemTaskList[taskid].dateStop = null
     }
 }

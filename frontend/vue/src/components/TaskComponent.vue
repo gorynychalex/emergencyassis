@@ -131,16 +131,17 @@
         },
         methods: {
             enablechange(task, enable){
+
                 console.log("data.item.id: " + task.id)
                 console.log("data.item.enable: " + enable)
 
-                enable && !task.dateStop? task.dateStop=new Date() : task.dateStop=''
+                // enable && !task.dateStop? taskedited.dateStop=new Date() : taskedited.dateStop=''
 
                 alert(JSON.stringify(task))
 
                 this.$store.dispatch(TASK_DONE, task)
                     .then(()=>{
-                        this.$router.push('/task')
+                        this.$router.push('/service')
                     })
                     .catch(e=>
                         console.log(e)

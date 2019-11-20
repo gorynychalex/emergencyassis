@@ -102,7 +102,8 @@ export default {
             formatter: value => value && isNaN(value) && value.split("T").length > 1?
                 value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
                 :
-                value
+                value,
+            sortable: true
         },
         {
             key: 'dateStart',
@@ -110,7 +111,8 @@ export default {
             formatter: value => value && isNaN(value) && value.split("T").length > 1?
                 value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
                 :
-                value
+                value,
+            sortable: true
         },
         {
             key: 'dateStop',
@@ -118,15 +120,18 @@ export default {
             formatter: value => value && isNaN(value) && value.split("T").length > 1?
                 value.split("T")[0].split("-")[2] + "/" + value.split("T")[0].split("-")[1] + "/" + value.split("T")[0].split("-")[0]
                 :
-                value
+                value,
+            sortable: true
         },
         {
             key: 'duration',
-            label: 'Продолжительность'
+            label: 'Продолжительность',
+            sortable: true
         },
         {
             key: 'enable',
-            label: 'Разрешено'
+            label: 'Разрешено',
+            sortable: true
         }
     ]
 }
