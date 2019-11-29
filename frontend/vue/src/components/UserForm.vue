@@ -1,5 +1,6 @@
 <template>
     <div class="text-left">
+
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group id="input-group-nickname" label="Nickname:" label-for="input-nickname"
                        description="We'll never share your nickname with anyone else." >
@@ -97,45 +98,66 @@
         </b-form-checkbox-group>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+        <b-form-group id="input-group-users" label="Подчиненные пользователи: ">
+            <b-form-checkbox-group v-model="form.users" id="checkboxes-users">
+
+            </b-form-checkbox-group>
+        </b-form-group>
+
+      <b-button type="submit" variant="primary">{{ userinput? 'Изменить' : 'Добавить'}}</b-button>
+      <b-button type="reset" variant="danger">Сбросить</b-button>
     </b-form>
+
+
     <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
     </b-card>
+
+        <!--UserInput:  {{ userinput }}-->
+
   </div>
 </template>
 
 <script>
-    import {USER_ADD} from "../store/actions/users";
+    import {USER_ADD, USER_EDIT_USERS} from "../store/actions/users";
 
     export default {
         name: "UserForm",
+        props: { userinput: Object, usersinnerselect: Array, },
         data()
         {
             return {
+                json_getAllKeys1: data => data.reduce((keys, obj) => keys.concat(Object.keys(obj).filter(key => keys.indexOf(key) === -1)), []),
                 form: {
-                    nickname: '',
-                    password: '',
-                    firstname: '',
-                    middlename: '',
-                    lastname: '',
-                    email: '',
-                    phone: '',
-                    address: '',
-                    role: '',
+                    id: this.userinput.id ? this.userinput.id : '',
+                    nickname: this.userinput.nickname ? this.userinput.nickname : '',
+                    password: this.userinput.password ? this.userinput.password : '',
+                    firstname: this.userinput.firstname ? this.userinput.firstname : '',
+                    middlename: this.userinput.middlename ? this.userinput.middlename : '',
+                    lastname: this.userinput.lastname ? this.userinput.lastname : '',
+                    email: this.userinput.email ? this.userinput.email : '',
+                    phone: this.userinput.phone ? this.userinput.phone : '',
+                    address: this.userinput.address ? this.userinput.address : '',
+                    role: this.userinput.role ? this.userinput.role : '',
                     roles: [],
+                    users: [],
                 },
                 locale: [{ text: 'Выберите одно', value: null }, 'город', 'село'],
                 role: [{ text: 'Выбор основной роли:', value: null }, { text: 'Обслуживаемый', value: 'HARDUP' },{ text: 'Социальный работник', value: 'EMPLOYEE' }],
                 show: true
             }
         },
+        mounted() {
+            console.log(Object.keys(this.userinput))
+        },
     methods: {
       onSubmit(evt) {
           evt.preventDefault()
 
-          alert(JSON.stringify(this.form))
+          this.userinput.id ? console.log("METHOD PUT") : console.log("METHOD POST")
+
+          alert(JSON.stringify(this.userinput))
+
 
           // console.log("here is add user in db")
           this.$store.dispatch(USER_ADD, JSON.stringify(this.form))
@@ -146,6 +168,7 @@
                   console.log(e)
 
           })
+          this.$emit('event','done')
       },
       onReset(evt) {
         evt.preventDefault()
@@ -164,8 +187,33 @@
         this.$nextTick(() => {
           this.show = true
         })
-      }
-    }
+          this.$emit('event','done')
+      },
+      json_getAllKeys(data) {
+          data.reduce((keys, obj) =>
+              keys.concat(
+                  Object.keys(obj).filter(key => keys.indexOf(key) === -1)
+              ),
+              [])
+        },
+    },
+        watch: {
+            usersinnerselect(newVal, oldVal){
+                console.log("UserForm come users select " + newVal)
+
+                this.form.users=newVal
+
+                // console.log("Users: " + JSON.stringify(newVal))
+
+                this.$store.dispatch(USER_EDIT_USERS, newVal)
+
+            },
+            userinput(newVal, oldVal){
+                console.log("User change!!!")
+                console.log(Object.keys(newVal).length)
+
+            }
+        }
     }
 </script>
 

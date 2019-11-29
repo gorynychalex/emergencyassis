@@ -1,4 +1,4 @@
-import {FETCH_USERS, user, USER_ADD} from "../../actions/users";
+import {FETCH_USERS, user, USER_ADD, USER_EDIT_USERS} from "../../actions/users";
 import apiCall from "../../../utils/api";
 
 export default {
@@ -11,6 +11,7 @@ export default {
             mutation: FETCH_USERS
         })
     },
+
     [USER_ADD]: ({ commit, dispatch }, user) => {
 
         return new Promise((resolve, reject)=>{
@@ -23,5 +24,19 @@ export default {
             console.log("Here is add user: " + user)
 
         })
-    }
+    },
+
+    [USER_EDIT_USERS]: ({ commit, dispatch }, user) => {
+
+
+
+        return new Promise((resolve,reject) => {
+
+            console.log("Dispatch user : " + user )
+            // console.log("Dispatch users: " + users)
+
+            // commit(USER_EDIT_USERS, user, users)
+
+        })
+    },
 }

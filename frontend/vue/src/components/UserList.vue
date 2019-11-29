@@ -1,7 +1,22 @@
 <template>
     <div>
         <!--<p>User list</p>-->
-        <b-table striped hover :items="USERS">
+        <b-table striped hover :items="listitems" :fields="fieldsitem">
+
+            <!-- A virtual column -->
+            <template slot="id" slot-scope="data">
+                {{ data.index+1 }}
+
+                <!--Tag for !DONE! and !SELECT! -->
+                <b-form-checkbox-group v-model="usersselect" >
+                    <b-form-checkbox
+
+                            :value='data.item'
+                    >
+                    </b-form-checkbox>
+                </b-form-checkbox-group>
+
+            </template>
 
             <template slot="organization" slot-scope="data">
 
@@ -27,6 +42,17 @@
 
             </template>
 
+            <!--Virtual slot-->
+            <template slot="edit" slot-scope="data">
+
+                <!--<b-button variant="success" @click="$emit('selectuser',data.item)">Редактировать</b-button>-->
+                <b-button variant="success" @click="selectuserforedit(data.item)">Редактировать</b-button>
+                <b-button variant="danger">Удалить</b-button>
+
+                {{ data.item.id }}
+
+            </template>
+
         </b-table>
     </div>
 </template>
@@ -38,21 +64,57 @@
 
     export default {
         name: "UserList",
+        props: {
+            listitems: Array,
+            fieldsitem: Array,
+
+        },
         data(){
             return{
+                userselect: '',
+                usersselect: [],
+                userlistfiltered: this.userlist,
+                selectrole: ''
                 // itemList
             }
         },
         computed: {
             ...mapState([
-                'itemUserList'
+                'itemUserList',
+                'fieldsUser'
             ]),
             ...mapGetters([
-                'USERS'
+                'USERS',
+                'USERFIELDS'
             ])
         },
         mounted() {
             // this.$store.dispatch('FETCH_USERS', 'user')
+        },
+        methods: {
+            userlistfilterbyrole(role){
+                // this.userlistfiltered = this.userlist.filter(x=>x.role==role)
+            },
+            selectuserforedit(item){
+                this.$emit('selectuser',item)
+
+                this.role = item.role
+                console.log("item.role : " + item.role)
+                if(item.role == 'EMPLOYEE'){
+                    this.userlistfilterbyrole('HARDUP')
+                } else if (item.role == 'SPECIALIST'){
+                    this.userlistfilterbyrole('EMPLOYEE')
+                }
+                else {
+                    this.userlistfiltered=this.userlist
+                }
+            },
+        },
+        watch: {
+            usersselect(newVal,oldVal){
+                console.log('usersSelect: ' + newVal)
+                this.$emit('usersinnerselect',newVal)
+            }
         },
     }
 </script>
