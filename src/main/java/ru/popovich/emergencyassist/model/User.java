@@ -1,6 +1,7 @@
 package ru.popovich.emergencyassist.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import ru.popovich.emergencyassist.model.personal.UserPersonal;

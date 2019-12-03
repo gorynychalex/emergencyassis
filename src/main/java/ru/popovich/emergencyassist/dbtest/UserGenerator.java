@@ -42,7 +42,7 @@ public class UserGenerator {
                 }
         );
 
-        //Add relations between Needy Users and Employee
+        //Add relations between UserNeedy Users and Employee
 
         List<UserRelation> userHardUp00Relations = new ArrayList<UserRelation>() {{
             add(new UserRelation(users.get(3),true)); add(new UserRelation(users.get(4),false)); add(new UserRelation(users.get(5),false));
