@@ -89,10 +89,12 @@ public class TaskController {
                 if(dateTo == null)
                     return taskSocialServiceDao.findTaskSocialServiceByUserAndDateStop(userNeedy, dateFrom, new Date(dateFrom.getTime() + (long)(24*60*60*1000)));
                 return taskSocialServiceDao.findTaskSocialServiceByUserAndDateStop(userNeedy, dateFrom, dateTo);
-            default:
+            case "datecreate":
                 if(dateTo == null)
                     return taskSocialServiceDao.findTaskSocialServiceByUserAndDateCreate(userNeedy, dateFrom, new Date(dateFrom.getTime() + (long)(24*60*60*1000)));
                 return taskSocialServiceDao.findTaskSocialServiceByUserAndDateCreate(userNeedy, dateFrom, dateTo);
+            default:
+                return taskSocialServiceDao.findTaskSocialServicesByUser(userNeedy);
         }
     }
 
