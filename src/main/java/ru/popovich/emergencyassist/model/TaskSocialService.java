@@ -2,7 +2,6 @@ package ru.popovich.emergencyassist.model;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -34,7 +33,7 @@ public class TaskSocialService {
 
     private boolean enable = true;
 
-    private Status status;
+    private TaskStatus taskStatus;
 
     @Range(min=1,max=10)
     private Integer priority;
@@ -49,7 +48,7 @@ public class TaskSocialService {
         this.socialService = socialService;
         this.needy = needy;
         this.dateCreate = new Date();
-        this.status = Status.NEW;
+        this.taskStatus = TaskStatus.NEW;
         this.priority = 5;
     }
 
@@ -148,12 +147,12 @@ public class TaskSocialService {
         this.version = version;
     }
 
-    public Status getStatus() {
-        return status;
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public Integer getPriority() {

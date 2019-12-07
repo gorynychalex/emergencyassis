@@ -1,6 +1,6 @@
 package ru.popovich.emergencyassist.model;
 
-public enum Status {
+public enum TaskStatus {
 
     NEW("Новый"),
 
@@ -14,7 +14,7 @@ public enum Status {
 
     private String s;
 
-    Status(String s) {
+    TaskStatus(String s) {
         this.s = s;
     }
 
