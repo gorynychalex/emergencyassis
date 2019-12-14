@@ -33,7 +33,7 @@ public class TaskSocialService {
 
     private boolean enable = true;
 
-    private TaskStatus taskStatus;
+    private TaskStatus status;
 
     @Range(min=1,max=10)
     private Integer priority;
@@ -48,7 +48,7 @@ public class TaskSocialService {
         this.socialService = socialService;
         this.needy = needy;
         this.dateCreate = new Date();
-        this.taskStatus = TaskStatus.NEW;
+        this.status = TaskStatus.NEW;
         this.priority = 5;
     }
 
@@ -147,12 +147,12 @@ public class TaskSocialService {
         this.version = version;
     }
 
-    public TaskStatus getTaskStatus() {
-        return taskStatus;
+    public TaskStatus getStatus() {
+        return status;
     }
 
-    public void setTaskStatus(TaskStatus taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
     public Integer getPriority() {
