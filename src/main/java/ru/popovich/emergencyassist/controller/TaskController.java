@@ -16,10 +16,7 @@ import ru.popovich.emergencyassist.repository.UserDao;
 
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/task")
@@ -169,6 +166,14 @@ public class TaskController {
         BeanUtils.copyProperties(taskSocialService, taskSocialServiceInit, "id","socialService");
 
         return taskSocialServiceDao.save(taskSocialServiceInit);
+    }
+
+    @GetMapping("{id}/update")
+    @ResponseBody
+    public String updateParam(@PathVariable("id") TaskSocialService taskSocialServiceInit,
+                              @RequestParam Map<String, String> params){
+
+        return params.entrySet().toString();
     }
 
     @DeleteMapping("{id}")
