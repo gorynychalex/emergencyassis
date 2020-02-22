@@ -15,8 +15,11 @@ import ru.popovich.emergencyassist.repository.TaskSocialServiceDao;
 import ru.popovich.emergencyassist.repository.UserDao;
 
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/task")
@@ -170,10 +173,54 @@ public class TaskController {
 
     @GetMapping("{id}/update")
     @ResponseBody
-    public String updateParam(@PathVariable("id") TaskSocialService taskSocialServiceInit,
+    public TaskSocialService updateParam(@PathVariable("id") TaskSocialService taskSocialServiceInit,
                               @RequestParam Map<String, String> params){
 
-        return params.entrySet().toString();
+        Class<?> classTask = taskSocialServiceInit.getClass();
+
+        Field[] fields = classTask.getDeclaredFields();
+
+        params.entrySet().stream()
+                .map(p->{
+                    Field field = null;
+                    try {
+                        field = classTask.getDeclaredField(p.getKey());
+                    } catch (NoSuchFieldException e){
+                        e.printStackTrace();
+                    }
+                    field.setAccessible(true);
+                    Class<?> fieldType = field.getType();
+                    boolean fieldTypeIsEnum = fieldType.isEnum();
+                    Class fieldType1 = null;
+                    try {
+                        fieldType1 = Class.forName(fieldType.getName());
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Object fieldObject = null;
+
+                    if(fieldType.isEnum())
+                        fieldObject = Enum.valueOf(fieldType1, p.getValue());
+                    else if(fieldType.equals(boolean.class))
+                        fieldObject = Boolean.valueOf(p.getValue());
+                    else if(fieldType.equals(Date.class)) {
+                        try {
+                            fieldObject = new SimpleDateFormat("yyyy-MM-dd").parse(p.getValue());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else fieldObject = new String();
+                    try {
+                        field.set(taskSocialServiceInit, fieldObject);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    return field;
+
+                }).collect(Collectors.toList());
+
+        return taskSocialServiceDao.save(taskSocialServiceInit);
     }
 
     @DeleteMapping("{id}")
