@@ -4,13 +4,12 @@
         <b-table striped hover :items="listitems" :fields="fieldsitem">
 
             <!-- A virtual column -->
-            <template slot="id" slot-scope="data">
-                {{ data.index+1 }}
+            <template v-slot:cell(id)="data">
+<!--                {{ data.index+1 }}-->
 
                 <!--Tag for !DONE! and !SELECT! -->
                 <b-form-checkbox-group v-model="usersselect" >
                     <b-form-checkbox
-
                             :value='data.item'
                     >
                     </b-form-checkbox>
@@ -19,35 +18,37 @@
             </template>
 
             <template slot="organization" slot-scope="data">
-
                 <span :title="data.value.name">{{ data.value.name }}</span>
+            </template>
 
+            <template v-slot:cell(role)="data">
+                 {{ data.value == 'SPECIALIST' ? "Специалист" : data.value == 'EMPLOYEE' ? "Соц.работник" : data.value == 'HARDUP' ? "Обслуживаемый" : "другой" }}
             </template>
 
             <template slot="roles" slot-scope="data">
-
-                <span v-for="i in data.value">{{ i }}, </span>
-
+                <span v-for="i in data.value" :key="i.id">{{ i }}, </span>
             </template>
 
             <template slot="organizations" slot-scope="data">
 
-                <span v-for="i in data.value">{{ i.name }}, </span>
+                <span v-for="i in data.value" :key="i.id">{{ i.name }}, </span>
 
             </template>
 
-            <template slot="users" slot-scope="data">
+<!--            <template slot="users" slot-scope="data">-->
+<!--                <span v-for="(usr,index) in data.value" :key="usr.id">{{ index }} - {{ usr.id }}, </span>-->
+<!--            </template>-->
 
-                <span v-for="i in data.value">{{ i.lastname }}, </span>
-
+            <template v-slot:cell(users)="data">
+                <span v-for="(usr) in data.value" :key="usr.id">{{ usr.lastname }}<br /> </span>
             </template>
 
             <!--Virtual slot-->
-            <template slot="edit" slot-scope="data">
+            <template v-slot:cell(edit)="data">
 
                 <!--<b-button variant="success" @click="$emit('selectuser',data.item)">Редактировать</b-button>-->
-                <b-button variant="success" @click="selectuserforedit(data.item)">Редактировать</b-button>
-                <b-button variant="danger">Удалить</b-button>
+                <b-button @click="selectuserforedit(data.item)" variant="success">Редактировать</b-button>
+                <b-button @click="deleteItem(data.item)" variant="danger">Удалить</b-button>
 
                 {{ data.item.id }}
 
@@ -67,7 +68,6 @@
         props: {
             listitems: Array,
             fieldsitem: Array,
-
         },
         data(){
             return{
@@ -92,11 +92,16 @@
             // this.$store.dispatch('FETCH_USERS', 'user')
         },
         methods: {
-            userlistfilterbyrole(role){
+            userlistfilterbyrole(){
                 // this.userlistfiltered = this.userlist.filter(x=>x.role==role)
             },
+            // Edit user
             selectuserforedit(item){
+                // Emit throw
                 this.$emit('selectuser',item)
+
+
+                this.usersselect = item.users
 
                 this.role = item.role
                 console.log("item.role : " + item.role)
@@ -109,10 +114,14 @@
                     this.userlistfiltered=this.userlist
                 }
             },
+            deleteItem(item){
+                console.log("delete item " + item)
+            },
         },
         watch: {
-            usersselect(newVal,oldVal){
-                console.log('usersSelect: ' + newVal)
+            usersselect(newVal){
+                // newVal.forEach(x=>console.log(x.id))
+                // console.log('usersSelect: ' + newVal.length)
                 this.$emit('usersinnerselect',newVal)
             }
         },

@@ -119,7 +119,7 @@
 </template>
 
 <script>
-    import {USER_ADD, USER_EDIT_USERS} from "../store/actions/users";
+    import {USER_ADD, USER_EDIT_USERS, USER_UPDATE} from "../store/actions/users";
 
     export default {
         name: "UserForm",
@@ -139,11 +139,19 @@
                     phone: this.userinput.phone ? this.userinput.phone : '',
                     address: this.userinput.address ? this.userinput.address : '',
                     role: this.userinput.role ? this.userinput.role : '',
-                    roles: [],
-                    users: [],
+                    roles: this.userinput.roles ? this.userinput.roles : [],
+                    // roles: [],
+                    users: this.userinput.users ? this.userinput.users : [],
+                    users2: [],
                 },
                 locale: [{ text: 'Выберите одно', value: null }, 'город', 'село'],
-                role: [{ text: 'Выбор основной роли:', value: null }, { text: 'Обслуживаемый', value: 'HARDUP' },{ text: 'Социальный работник', value: 'EMPLOYEE' }],
+                role: [
+                    { text: 'Выбор основной роли:', value: null },
+                    { text: 'Обслуживаемый', value: 'HARDUP' },
+                    { text: 'Социальный работник', value: 'EMPLOYEE' },
+                    { text: 'Специалист', value: 'SPECIALIST' },
+                    { text: 'Аналитик', value: 'ANALIST' },
+                    ],
                 show: true
             }
         },
@@ -154,20 +162,33 @@
       onSubmit(evt) {
           evt.preventDefault()
 
+          alert(JSON.stringify(this.form))
+
           this.userinput.id ? console.log("METHOD PUT") : console.log("METHOD POST")
 
-          alert(JSON.stringify(this.userinput))
+          console.log(this.userinput.id)
 
+          if(!this.userinput.id) {
+              console.log("here is add user in db")
+              this.$store.dispatch(USER_ADD, this.form)
+                  .then(() => {
+                      this.$router.push('/user')
+                  })
+                  .catch(e => {
+                      console.log(e)
 
-          // console.log("here is add user in db")
-          this.$store.dispatch(USER_ADD, JSON.stringify(this.form))
-                    .then(()=>{
-                        this.$router.push('/user')
-                    })
-              .catch(e => {
-                  console.log(e)
+                  })
+          } else {
+              console.log("here is update user in db")
+              this.$store.dispatch(USER_UPDATE, this.form)
+                  .then(() => {
+                      this.$router.push('/user')
+                  })
+                  .catch(e => {
+                      console.log(e)
+                  })
+          }
 
-          })
           this.$emit('event','done')
       },
       onReset(evt) {
@@ -198,19 +219,20 @@
         },
     },
         watch: {
-            usersinnerselect(newVal, oldVal){
-                console.log("UserForm come users select " + newVal)
+            usersinnerselect(newVal){
+
+                // console.log("UserForm come users select: " + JSON.stringify(newVal))
 
                 this.form.users=newVal
 
-                // console.log("Users: " + JSON.stringify(newVal))
+                // console.log("Users: " + JSON.stringify(newVal).id)
 
-                this.$store.dispatch(USER_EDIT_USERS, newVal)
+                this.$store.dispatch(USER_EDIT_USERS, this.userinput, newVal)
 
             },
-            userinput(newVal, oldVal){
+            userinput(newVal){
                 console.log("User change!!!")
-                console.log(Object.keys(newVal).length)
+                console.log(Object.keys(newVal))
 
             }
         }

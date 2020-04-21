@@ -31,66 +31,66 @@
             <b-button v-if="!taskaddbuttonshow && taskaddformshow" type="submit" variant="outline-primary">Удалить</b-button>
 
             <!--SHOW SELECTED ITEMS-->
-            <!--<br>{{ selectfordone }}-->
+            <br>{{ selectfordone }}
             <br>
-        <template v-slot:label v-if="taskaddformshow">
-            <!--<b>Choose your flavours:</b><br>-->
-            <b-form-checkbox
-              v-model="selectfordeleteall"
-              :indeterminate="indeterminate"
-              aria-describedby="tasklist"
-              aria-controls="tasklist"
-              @change="toggleAllForDelete"
-            >
-              <!--{{ selectfordeleteall ? 'Un-select All' : 'Select All' }}-->
-              {{ selectfordeleteall ? 'Отменить выделение' : 'Выбрать все' }}
-            </b-form-checkbox>
-        </template>
-
-        <b-table small :items="tasksbyuser(selecthardup)" :fields="TASKSFIELDS_noID">
-
-            <!-- A virtual column -->
-            <template slot="index" slot-scope="data">
-                {{ data.index+1 }}
-
-                <!--Tag for !DONE! and !SELECT! -->
-                <b-form-checkbox-group v-model="selectfordone">
-                    <b-form-checkbox
-
-                            :value='data.item.id'
-                    >
-                    </b-form-checkbox>
-                </b-form-checkbox-group>
-
-            </template>
-
-            <template slot="employee" slot-scope="data">
-
-                {{ data.value.firstname }} {{ data.value.middlename }}
-            </template>
-
-            <template slot="needy" slot-scope="data">
-                {{ data.value.firstname }} {{ data.value.middlename }}
-            </template>
-
-            <template slot="socialService" slot-scope="data">
-                <span :title='data.value.title'>{{ data.value.title.substring(0, 30) }} ...</span>
-            </template>
-
-            <template slot="enable" slot-scope="data">
-                <b-button :variant="data.item.enable? 'success':''" @click="enablechange(data.item, data.item.enable)">
-                    {{ data.item.enable? "Выполняется":"Выполнено" }}
-                </b-button>
-                <b-form-checkbox-group v-model="data.item.enable">
-                <b-form-checkbox>
-
-                    {{ data.item.id }} {{ data.item.enable }}
-
+            <template v-slot:label v-if="taskaddformshow">
+                <!--<b>Choose your flavours:</b><br>-->
+                <b-form-checkbox
+                  v-model="selectfordeleteall"
+                  :indeterminate="indeterminate"
+                  aria-describedby="tasklist"
+                  aria-controls="tasklist"
+                  @change="toggleAllForDelete"
+                >
+                  <!--{{ selectfordeleteall ? 'Un-select All' : 'Select All' }}-->
+                  {{ selectfordeleteall ? 'Отменить выделение' : 'Выбрать все' }}
                 </b-form-checkbox>
-                </b-form-checkbox-group>
             </template>
 
-        </b-table>
+            <!-- TASKS TABLES START -->
+            <b-table small :items="tasksbyuser(selecthardup)" :fields="TASKSFIELDS_noID">
+
+                <!-- A virtual column -->
+                <template v-slot:cell(index)="data">
+                    {{ data.index+1 }}
+
+                    <!--Tag for !DONE! and !SELECT! -->
+                    <b-form-checkbox-group v-model="selectfordone">
+                        <b-form-checkbox
+
+                                :value='data.item.id'
+                        >
+                        </b-form-checkbox>
+                    </b-form-checkbox-group>
+
+                </template>
+
+                <template v-slot:cell(employee)="data">
+                    {{ data.value.firstname }} {{ data.value.middlename }}  {{ data.value.lastname }}
+                </template>
+
+                <template v-slot:cell(needy)="data">
+                    {{ data.value.firstname }} {{ data.value.middlename }}  {{ data.value.lastname }}
+                </template>
+
+                <template v-slot:cell(socialService)="data">
+                    <span :title='data.value.title'>{{ data.value.title.substring(0, 30) }} ...</span>
+                </template>
+
+                <template slot="enable" slot-scope="data">
+                    <b-button :variant="data.item.enable? 'success':''" @click="enablechange(data.item, data.item.enable)">
+                        {{ data.item.enable? "Выполняется":"Выполнено" }}
+                    </b-button>
+                    <b-form-checkbox-group v-model="data.item.enable">
+                    <b-form-checkbox>
+
+                        {{ data.item.id }} {{ data.item.enable }}
+
+                    </b-form-checkbox>
+                    </b-form-checkbox-group>
+                </template>
+
+            </b-table>
         </b-form-group>
         </b-form>
     </div>
@@ -201,7 +201,7 @@
 
                 if(this.selectfordone.length !== 0)
                     this.$store.dispatch(TASKS_DELETE, this.selectfordone)
-                        .then(()=>this.$route.push('/task'))
+                        .then(()=>this.$router.push('/task'))
                         .catch(e=>console.log(e))
 
                     // this.selectfordelete.forEach(x=> {
@@ -220,13 +220,14 @@
                 this.selectfordone=[]
             },
             toggleAllForDelete(checked){
-                console.log(checked)
+                // console.log("CHECKED")
+                // console.log("THIS    " + checked)
                 this.selectfordone = checked ? this.tasklist.map(x=>x.id):[]
             }
         },
         watch:{
             // Every select item for delete watch: all selected or not
-            selectfordone(newVal, oldVal){
+            selectfordone(newVal){
                 if(newVal.length === 0) {
                     this.indeterminate = false
                     this.selectfordeleteall = false

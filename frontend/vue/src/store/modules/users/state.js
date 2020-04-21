@@ -2,6 +2,10 @@ export default {
     itemUserList: '',
     fieldsUser: [
         {
+            key: 'edit',
+            label: 'Ред/Удалить',
+        },
+        {
             key: 'id',
             label: 'п/п',
         },
@@ -12,7 +16,7 @@ export default {
         },
         {
             key: 'lastname',
-            label: 'Имя',
+            label: 'Фамилия',
             sortable: true
         },
         {
@@ -22,18 +26,18 @@ export default {
         },
         {
             key: 'middlename',
-            label: 'Имя',
+            label: 'Отчество',
             sortable: true
         },
         {
             key: 'role',
             label: 'Роль',
-            sorted: true
+            sortable: true
         },
         {
             key: 'users',
             label: 'Обслуживаемые',
-            sorted: true
+            sortable: true
         },
         {
             key: 'address',
@@ -44,10 +48,6 @@ export default {
             key: 'phone',
             label: 'Телефон',
             sortable: true
-        },
-        {
-            key: 'edit',
-            label: 'Ред/Удалить',
         },
     ]
 }
