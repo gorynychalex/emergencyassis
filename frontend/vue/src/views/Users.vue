@@ -56,8 +56,10 @@
 
             userforminputevent(item){
                 console.log(item)
-                this.buttonaddshow=false
-                this.userlist=this.USERS
+                if(item == 'done') {
+                    this.buttonaddshow = false
+                    this.userlist = this.USERS
+                }
             },
 
             userselectevents(item){

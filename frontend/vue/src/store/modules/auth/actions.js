@@ -9,7 +9,7 @@ export default {
     [AUTH_REQUEST]: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit(AUTH_REQUEST)
-            console.log('API Call HERE!!!')
+            // console.log('API Call HERE!!!')
             // apiCall({commit, url: '/oauth/token', data: user, method: 'POST'})
             //     .then(r => {
             //         localStorage.setItem('access_token', r.token)

@@ -1,9 +1,15 @@
-import {USER_ERROR, USER_REQUEST, USER_SUCCESS} from "../../actions/profile";
+import {USER_ERROR, USER_GETTER, USER_REQUEST, USER_SUCCESS} from "../../actions/profile";
 import {AUTH_LOGOUT} from "../../actions/auth";
 // import {AUTH_LOGOUT} from "../../actions/auth";
 // import apiCall from "../../../utils/api";
 
 export default {
+    [USER_GETTER]: ({commit}) => {
+        return new Promise((resolve)=> {
+
+            return resolve(commit(USER_GETTER))
+        })
+    },
     [USER_REQUEST]: ({commit, dispatch}, username) => {
         commit(USER_REQUEST)
 
@@ -19,7 +25,7 @@ export default {
             }
             )
             .catch(r=> {
-                    commit(USER_ERROR)
+                    commit(USER_ERROR, r)
                     dispatch(AUTH_LOGOUT)
                 }
             )

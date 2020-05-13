@@ -34,7 +34,7 @@
 
                 this.$store.dispatch(AUTH_REQUEST, { username, password })
                     .then(()=>{
-                        this.$router.push('/task')
+                        this.$router.push('/account')
                     })
 
                 //

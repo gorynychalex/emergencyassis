@@ -1,11 +1,12 @@
-import {USER_ERROR, USER_REQUEST, USER_SUCCESS} from "../../actions/profile";
+import {USER_ERROR, USER_GETTER, USER_REQUEST, USER_SUCCESS} from "../../actions/profile";
 import {AUTH_LOGOUT} from "../../actions/auth";
-import Vue from "vue";
+// import Vue from "vue";
 
 export default {
     [USER_REQUEST]: (state) => {
         state.status = 'loading'
     },
+    [USER_GETTER]: state => state.profile,
     [USER_SUCCESS]: (state, resp) => {
         state.status = 'success'
         state.profile = resp

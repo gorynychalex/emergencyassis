@@ -5,7 +5,7 @@
 
 <template>
   <div>
-    <div v-if="getProfile.firstname">
+    <div v-if="getProfile">
       <div class="headline">
       <!--<img src="../../assets/dog-profile.jpeg">-->
         {{ getProfile.role == 'HARDUP' ? "Обслуживаемый" : getProfile.role == 'EMPLOYEE'? "Социальный работник": getProfile.role == 'SPECIALIST' ? "Специалист" : "Профиль" }}
@@ -13,6 +13,8 @@
         :
 
         {{getProfile.firstname}} {{getProfile.lastname}}
+        :
+        Подчиненных: {{ getProfile.users.length }}
 
       </div>
     </div>

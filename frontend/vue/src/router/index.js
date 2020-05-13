@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import SocialServices from '../views/Services.vue'
-import Account from '../components/account'
+// import Account from '../components/account'
 import Login from '../views/Login.vue'
 import Users from '../views/Users.vue'
 import Tasks from '../views/Tasks.vue'
@@ -23,12 +23,12 @@ const ifAuthenticated = (to, from, next) => {
     next()
     return
   }
-  next('/login')
+  next('/account')
 }
 
 const ifLoadedDatas = (to, from, next) => {
   if(!store.getters.hasLoadedServices){
-    console.log('here load datas')
+    // console.log('here load datas')
     store.dispatch('FETCH_SERVICES', 'service')
     // store.dispatch('FETCH_USERS', 'user')
     // store.dispatch('FETCH_TASKS', 'task')
@@ -90,12 +90,12 @@ export default new Router({
     {
       path: '/account',
       name: 'Account',
-      component: Account,
-      beforeEnter: ifAuthenticated,
+      component: () => import(/* webpackChunkName: "about" */ '../components/account'),
     },
     {
       path: '/task',
       name: 'task',
+      beforeEnter: ifAuthenticated,
       component: Tasks
     }
   ]
