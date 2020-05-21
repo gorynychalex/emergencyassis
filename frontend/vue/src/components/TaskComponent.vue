@@ -73,11 +73,24 @@
                     {{ data.value.firstname }} {{ data.value.middlename }}  {{ data.value.lastname }}
                 </template>
 
+                <template v-slot:cell(status)="data">
+<!--                    <span>{{ data.value }}</span>-->
+                    <b-form-group id="input-group-roles">
+                        <b-form-select
+                                id="input-status"
+                                v-model="data.value"
+                                :options="statuses"
+                                required
+                        >
+                        </b-form-select>
+                    </b-form-group>
+                </template>
+
                 <template v-slot:cell(socialService)="data">
                     <span :title='data.value.title'>{{ data.value.title.substring(0, 30) }} ...</span>
                 </template>
 
-                <template slot="enable" slot-scope="data">
+                <template v-slot:cell(enable)="data">
                     <b-button :variant="data.item.enable? 'success':''" @click="enablechange(data.item, data.item.enable)">
                         {{ data.item.enable? "Выполняется":"Выполнено" }}
                     </b-button>
@@ -116,6 +129,7 @@
                 selectfordelete: '',
                 selectfordeleteall: false,
                 selectfordone: '',
+                statuses: [{value: "", text: "Неизвестно"},{value: "NEW", text: "Новая"},{value: "PROCESSING", text: "Выполняется"},{value: "CLOSED", text: "Закрыто"}]
             }
         },
         components: {

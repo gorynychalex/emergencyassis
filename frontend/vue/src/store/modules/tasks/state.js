@@ -1,12 +1,11 @@
 export default {
     itemTaskList: [],
     fieldsTaskList: {
-
-        'employee.middlename': {
-            label: 'Работник'
-        },
         'needy.middlename': {
             label: 'Обслуживаемый'
+        },
+        'employee.middlename': {
+            label: 'Работник'
         },
         'socialService.title': {
             label: 'Услуга',
@@ -83,18 +82,23 @@ export default {
             label: 'п/п',
         },
         {
-            key: 'employee',
-            label: 'Работник',
-            sortable: true
-        },
-        {
             key: 'needy',
             label: 'Обслуживаемый',
             sorted: true
         },
         {
+            key: 'employee',
+            label: 'Работник',
+            sortable: true
+        },
+        {
             key: 'socialService',
             label: 'Услуга',
+        },
+        {
+            key: 'status',
+            label: 'Статус заявки',
+            sortable: true
         },
         {
             key: 'dateCreate',
