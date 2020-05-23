@@ -28,26 +28,6 @@
 
         <b-form-group >
 
-            <b-button v-if="!taskaddbuttonshow && taskaddformshow" type="submit" variant="outline-primary">Удалить</b-button>
-
-            <!--SHOW SELECTED ITEMS-->
-            <br>{{ selectfordone }}
-            <br>
-            <template v-slot:label v-if="taskaddformshow">
-                <!--<b>Choose your flavours:</b><br>-->
-                <b-form-checkbox
-                  v-model="selectfordeleteall"
-                  :indeterminate="indeterminate"
-                  aria-describedby="tasklist"
-                  aria-controls="tasklist"
-                  @change="toggleAllForDelete"
-                >
-                  <!--{{ selectfordeleteall ? 'Un-select All' : 'Select All' }}-->
-                  {{ selectfordeleteall ? 'Отменить выделение' : 'Выбрать все' }}
-                </b-form-checkbox>
-            </template>
-
-            <!-- TASKS TABLES START -->
             <b-table small :items="tasksbyuser(selecthardup)" :fields="TASKSFIELDS_noID">
 
                 <!-- A virtual column -->
@@ -69,21 +49,24 @@
                     {{ data.value.firstname }} {{ data.value.middlename }}  {{ data.value.lastname }}
                 </template>
 
-                <template v-slot:cell(needy)="data">
-                    {{ data.value.firstname }} {{ data.value.middlename }}  {{ data.value.lastname }}
-                </template>
-
                 <template v-slot:cell(status)="data">
-<!--                    <span>{{ data.value }}</span>-->
+                    <!--                    <span>{{ data.value }}</span>-->
+
                     <b-form-group id="input-group-roles">
                         <b-form-select
                                 id="input-status"
                                 v-model="data.value"
                                 :options="statuses"
+                                @change="statusselectmethod($event,data.item)"
                                 required
                         >
                         </b-form-select>
                     </b-form-group>
+<!--                    {{ statusselect }}-->
+                </template>
+
+                <template v-slot:cell(needy)="data">
+                    {{ data.value.firstname }} {{ data.value.middlename }}  {{ data.value.lastname }}
                 </template>
 
                 <template v-slot:cell(socialService)="data">
@@ -94,16 +77,36 @@
                     <b-button :variant="data.item.enable? 'success':''" @click="enablechange(data.item, data.item.enable)">
                         {{ data.item.enable? "Выполняется":"Выполнено" }}
                     </b-button>
-                    <b-form-checkbox-group v-model="data.item.enable">
-                    <b-form-checkbox>
+                    <!--                    <b-form-checkbox-group v-model="data.item.enable">-->
+                    <!--                    <b-form-checkbox>-->
 
-                        {{ data.item.id }} {{ data.item.enable }}
+                    <!--                        {{ data.item.id }} {{ data.item.enable }}-->
 
-                    </b-form-checkbox>
-                    </b-form-checkbox-group>
+                    <!--                    </b-form-checkbox>-->
+                    <!--                    </b-form-checkbox-group>-->
                 </template>
 
             </b-table>
+
+            <!--SHOW SELECTED ITEMS-->
+            <b-button v-if="!taskaddbuttonshow && taskaddformshow" type="submit" variant="outline-primary">Удалить</b-button>
+            <br>{{ selectfordone }}
+            <br>
+
+            <!-- TASKS TABLES START -->
+            <template v-slot:label v-if="taskaddformshow">
+                <!--<b>Choose your flavours:</b><br>-->
+                <b-form-checkbox
+                  v-model="selectfordeleteall"
+                  :indeterminate="indeterminate"
+                  aria-describedby="tasklist"
+                  aria-controls="tasklist"
+                  @change="toggleAllForDelete"
+                >
+                  <!--{{ selectfordeleteall ? 'Un-select All' : 'Select All' }}-->
+                  {{ selectfordeleteall ? 'Отменить выделение' : 'Выбрать все' }}
+                </b-form-checkbox>
+            </template>
         </b-form-group>
         </b-form>
     </div>
@@ -129,7 +132,8 @@
                 selectfordelete: '',
                 selectfordeleteall: false,
                 selectfordone: '',
-                statuses: [{value: "", text: "Неизвестно"},{value: "NEW", text: "Новая"},{value: "PROCESSING", text: "Выполняется"},{value: "CLOSED", text: "Закрыто"}]
+                statuses: [{value: "", text: "Неопределено"},{value: "NEW", text: "Новая"},{value: "PROCESSING", text: "Выполняется"},{value: "SOLVED", text: "Решено"},{value: "CLOSED", text: "Закрыто"}],
+                statusselect: ''
             }
         },
         components: {
@@ -152,6 +156,9 @@
                 // enable && !task.dateStop? taskedited.dateStop=new Date() : taskedited.dateStop=''
 
                 alert(JSON.stringify(task))
+
+                task.status = enable? 'PROCESSING':'SOLVED'
+                this.statusselect = !enable? 'PROCESSING':'SOLVED'
 
                 this.$store.dispatch(TASK_DONE, task)
                     .then(()=>{
@@ -237,6 +244,21 @@
                 // console.log("CHECKED")
                 // console.log("THIS    " + checked)
                 this.selectfordone = checked ? this.tasklist.map(x=>x.id):[]
+            },
+            statusselectmethod(e, task){
+                this.statusselect = e;
+                console.log(task.status)
+                task.status=e
+                task.enable = task.status == 'SOLVED' || task.status == 'CLOSED' ? true : false
+                console.log("task.enable:   " + task.enable)
+                // task? console.log(task):console.log("nothind")
+                this.$store.dispatch(TASK_DONE, task)
+                    .then(()=>{
+                        this.$router.push('/task')
+                    })
+                    .catch(e=>
+                        console.log(e)
+                    )
             }
         },
         watch:{

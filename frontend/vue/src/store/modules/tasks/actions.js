@@ -3,12 +3,12 @@ import { FETCH_TASKS } from "../../actions/tasks";
 import apiCall from "../../../utils/api";
 
 export default {
-    [FETCH_TASKS]: ({ commit, dispatch }) => {
+    [FETCH_TASKS]: ({ commit}) => {
         apiCall({commit, url: '/api/v1/', method: 'GET', urlservice: task, mutation: FETCH_TASKS})
     },
-    [TASK_ADD]: ({ commit, dispatch }, task) => {
+    [TASK_ADD]: ({ commit }, task) => {
 
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve)=>{
 
             var newtask={"sid":task.socialService.id,"userHardupId":task.needy.id, "userEmployeeId":task.employee.id}
 
@@ -24,9 +24,9 @@ export default {
 
         })
     },
-    [TASKS_DELETE]: ({ commit, dispatch }, tasks) => {
+    [TASKS_DELETE]: ({ commit }, tasks) => {
 
-        return new Promise ((resolve, reject)=>{
+        return new Promise ((resolve)=>{
 
             tasks.forEach( taskid=> {
 
@@ -39,11 +39,13 @@ export default {
         })
 
     },
-    [TASK_DONE]: ({commit, dispatch}, task) => {
-        return new Promise((resolve, reject) => {
+    [TASK_DONE]: ({commit}, task) => {
+        return new Promise((resolve) => {
 
             commit(TASK_DONE, task)
 
+            console.log("task.enabled: " + task.enable)
+            console.log("task.id: " + task.id)
             fetch("/api/v1/task/" + task.id, {method: "PUT", body: JSON.stringify(task), headers: new Headers({'Content-type': 'application/json'})})
                 .then(r=>resolve(r))
 

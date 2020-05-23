@@ -100,6 +100,12 @@ export default {
             label: 'Статус заявки',
             sortable: true
         },
+
+        {
+            key: 'enable',
+            label: 'Разрешено',
+            sortable: true
+        },
         {
             key: 'dateCreate',
             label: 'Дата создания',
@@ -132,10 +138,5 @@ export default {
             label: 'Продолжительность',
             sortable: true
         },
-        {
-            key: 'enable',
-            label: 'Разрешено',
-            sortable: true
-        }
     ]
 }

@@ -30,5 +30,7 @@ export default {
 
         !state.itemTaskList[taskid].enable ?
         state.itemTaskList[taskid].dateStop = new Date() : state.itemTaskList[taskid].dateStop = null
+
+        state.itemTaskList[taskid].status = state.itemTaskList[taskid].enable ? 'PROCESSING' : 'SOLVED'
     }
 }
